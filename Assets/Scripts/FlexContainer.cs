@@ -509,17 +509,15 @@ public class FlexContainer : MonoBehaviour
                             var RWIndices = (int*)Methods.NvFlexMap(Shapes[i].Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
                             var RWVertices = (Vector3*)Methods.NvFlexMap(Shapes[i].Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
 
-                            //RWVertices = (Vector3*)Shapes[i].TriMesh.vertices.;
-                            //Array.Copy(Shapes[i].TriMesh.vertices, (System.Array)RWVertices, Shapes[i].TriMesh.vertices.Length);
 
                             for (int k = 0; k < Shapes[i].TriMesh.vertices.Length; k++)
                             {
-                                RWVertices[k] = Shapes[i].TriMesh.vertices[i];
+                                RWVertices[k] = Shapes[i].TriMesh.vertices[k];
                             }
 
                             for (int k = 0; k < Shapes[i].TriMesh.triangles.Length; k++)
                             {
-                                RWIndices[k] = Shapes[i].TriMesh.triangles[i];
+                                RWIndices[k] = Shapes[i].TriMesh.triangles[k];
                             }
 
                             Methods.NvFlexUnmap(Shapes[i].Indices);
