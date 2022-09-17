@@ -251,9 +251,10 @@ public class FlexContainer : MonoBehaviour
             positionsBuffer = Methods.NvFlexAllocBuffer(library, Shapes.Length, sizeof(float) * 4, NvFlexBufferType.eNvFlexBufferHost);
             rotationsBuffer = Methods.NvFlexAllocBuffer(library, Shapes.Length, sizeof(XQuat<float>), NvFlexBufferType.eNvFlexBufferHost);
             flagsBuffer = Methods.NvFlexAllocBuffer(library, Shapes.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
-        }
 
-        InitWeirdShapes();
+            InitWeirdShapes();
+
+        }
     }
 
     // Update is called once per frame
