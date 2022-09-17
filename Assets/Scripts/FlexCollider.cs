@@ -15,6 +15,17 @@ public class FlexCollider : MonoBehaviour
     public bool Dynamic;
     public bool Trigger;
 
+    public Mesh TriMesh;
+
+    [System.NonSerialized]
+    public uint MeshId;
+
+    [System.NonSerialized]
+    unsafe public NvFlexBuffer* Vertices;
+
+    [System.NonSerialized]
+    unsafe public NvFlexBuffer* Indices;
+
     // Start is called before the first frame update
     void Start()
     {

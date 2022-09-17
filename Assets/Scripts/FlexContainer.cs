@@ -208,6 +208,11 @@ public class FlexContainer : MonoBehaviour
         }
     }
 
+    public struct int3
+    {
+        public int x, y, z;
+    }
+
     SimBuffers GBuffers = new SimBuffers();
 
     // Start is called before the first frame update
@@ -247,6 +252,8 @@ public class FlexContainer : MonoBehaviour
             rotationsBuffer = Methods.NvFlexAllocBuffer(library, Shapes.Length, sizeof(XQuat<float>), NvFlexBufferType.eNvFlexBufferHost);
             flagsBuffer = Methods.NvFlexAllocBuffer(library, Shapes.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
         }
+
+        InitWeirdShapes();
     }
 
     // Update is called once per frame
@@ -317,6 +324,8 @@ public class FlexContainer : MonoBehaviour
         unsafe { Debug.Log(Methods.NvFlexGetActiveCount(solver)); }
         unsafe
         {
+            DestroyWeirdShapes();
+
             GBuffers.DestroyVectors();
             //Methods.NvFlexFreeBuffer(particleBuffer);
             //Methods.NvFlexFreeBuffer(velocityBuffer);
@@ -421,6 +430,35 @@ public class FlexContainer : MonoBehaviour
         }
     }
 
+    void InitWeirdShapes()
+    {
+        unsafe
+        {
+            for (int i = 0; i < Shapes.Length; i++)
+            {
+                switch (Shapes[i].Shape)
+                {
+                    case NvFlexCollisionShapeType.eNvFlexShapeBox:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeCapsule:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeConvexMesh:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeSDF:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeSphere:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
+                        Shapes[i].MeshId = Methods.NvFlexCreateTriangleMesh(library);
+
+                        Shapes[i].Vertices = Methods.NvFlexAllocBuffer(library, Shapes[i].TriMesh.vertices.Length, sizeof(Vector3), NvFlexBufferType.eNvFlexBufferHost);
+                        Shapes[i].Indices = Methods.NvFlexAllocBuffer(library, Shapes[i].TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
+                        break;
+                }
+            }
+        }
+    }
+
     void DealWithShapes()
     {
         unsafe
@@ -462,8 +500,69 @@ public class FlexContainer : MonoBehaviour
                             geometry[i].sphere.radius = Shapes[i].transform.lossyScale.x / 2;
                             break;
                         case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
+                            var RWIndices = (int*)Methods.NvFlexMap(Shapes[i].Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
+                            var RWVertices = (Vector3*)Methods.NvFlexMap(Shapes[i].Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
+
+                            //RWVertices = (Vector3*)Shapes[i].TriMesh.vertices.;
+                            //Array.Copy(Shapes[i].TriMesh.vertices, (System.Array)RWVertices, Shapes[i].TriMesh.vertices.Length);
+
+                            for (int k = 0; k < Shapes[i].TriMesh.vertices.Length; k++)
+                            {
+                                RWVertices[k] = Shapes[i].TriMesh.vertices[i];
+                            }
+
+                            for (int k = 0; k < Shapes[i].TriMesh.triangles.Length; k++)
+                            {
+                                RWIndices[k] = Shapes[i].TriMesh.triangles[i];
+                            }
+
+                            Methods.NvFlexUnmap(Shapes[i].Indices);
+                            Methods.NvFlexUnmap(Shapes[i].Vertices);
+
+                            var min = Shapes[i].TriMesh.bounds.min;
+                            var LowerBoundsPtr = &min;
+
+                            var max = Shapes[i].TriMesh.bounds.max;
+                            var UpperBoundsPtr = &max;
+
+                            Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length/3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
+
+                            geometry[i].triMesh.mesh = Shapes[i].MeshId;
+                            geometry[i].triMesh.scale[0] = Shapes[i].transform.lossyScale.x;
+                            geometry[i].triMesh.scale[1] = Shapes[i].transform.lossyScale.y;
+                            geometry[i].triMesh.scale[2] = Shapes[i].transform.lossyScale.z;
+
                             break;
                     }
+                }
+            }
+        }
+    }
+
+    void DestroyWeirdShapes()
+    {
+        unsafe
+        {
+            for (int i = 0; i < Shapes.Length; i++)
+            {
+                switch (Shapes[i].Shape)
+                {
+                    case NvFlexCollisionShapeType.eNvFlexShapeBox:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeCapsule:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeConvexMesh:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeSDF:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeSphere:
+                        break;
+                    case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
+                        Methods.NvFlexDestroyTriangleMesh(library, Shapes[i].MeshId);
+
+                        Methods.NvFlexFreeBuffer(Shapes[i].Vertices);
+                        Methods.NvFlexFreeBuffer(Shapes[i].Indices);
+                        break;
                 }
             }
         }
