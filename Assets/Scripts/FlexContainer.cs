@@ -450,9 +450,14 @@ public class FlexContainer : MonoBehaviour
                         break;
                     case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
                         Shapes[i].MeshId = Methods.NvFlexCreateTriangleMesh(library);
+                        Debug.Log("meshid_success");
 
                         Shapes[i].Vertices = Methods.NvFlexAllocBuffer(library, Shapes[i].TriMesh.vertices.Length, sizeof(Vector3), NvFlexBufferType.eNvFlexBufferHost);
+                        Debug.Log("vert_success");
+
                         Shapes[i].Indices = Methods.NvFlexAllocBuffer(library, Shapes[i].TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
+                        Debug.Log("indices_success");
+
                         break;
                 }
             }
@@ -525,7 +530,8 @@ public class FlexContainer : MonoBehaviour
                             var max = Shapes[i].TriMesh.bounds.max;
                             var UpperBoundsPtr = &max;
 
-                            Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length/3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
+                            //Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
+                            Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, null, null);
 
                             geometry[i].triMesh.mesh = Shapes[i].MeshId;
                             geometry[i].triMesh.scale[0] = Shapes[i].transform.lossyScale.x;
