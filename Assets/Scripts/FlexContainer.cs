@@ -518,19 +518,28 @@ public class FlexContainer : MonoBehaviour
                             for (int k = 0; k < Shapes[i].TriMesh.triangles.Length; k++)
                             {
                                 RWIndices[k] = Shapes[i].TriMesh.triangles[k];
+
+                                Debug.DrawLine(RWVertices[RWIndices[k]], RWVertices[RWIndices[k + 1]], Color.blue, float.PositiveInfinity);
+                            }
+
+                            for (int k = 0; k < Shapes[i].TriMesh.triangles.Length; k += 3)
+                            {
+                                Debug.DrawLine(RWVertices[RWIndices[k]], RWVertices[RWIndices[k + 1]], Color.blue, float.PositiveInfinity);
+                                Debug.DrawLine(RWVertices[RWIndices[k + 1]], RWVertices[RWIndices[k + 2]], Color.blue, float.PositiveInfinity);
+                                Debug.DrawLine(RWVertices[RWIndices[k + 2]], RWVertices[RWIndices[k]], Color.blue, float.PositiveInfinity);
                             }
 
                             Methods.NvFlexUnmap(Shapes[i].Indices);
                             Methods.NvFlexUnmap(Shapes[i].Vertices);
 
-                            var min = Shapes[i].TriMesh.bounds.min;
+                            var min = Shapes[i].TriMesh.bounds.min * 2;
                             var LowerBoundsPtr = &min;
 
-                            var max = Shapes[i].TriMesh.bounds.max;
+                            var max = Shapes[i].TriMesh.bounds.max * 2;
                             var UpperBoundsPtr = &max;
 
-                            //Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
-                            Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, null, null);
+                            Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
+                            //Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, null, null);
 
                             geometry[i].triMesh.mesh = Shapes[i].MeshId;
                             geometry[i].triMesh.scale[0] = Shapes[i].transform.lossyScale.x;
