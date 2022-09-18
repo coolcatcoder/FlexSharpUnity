@@ -623,7 +623,7 @@ MonoBehaviour:
   Shape: 2
   PhaseSettings: 16777216
   ShapeMysteryPower: 0
-  Dynamic: 0
+  Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
 --- !u!65 &391176326
