@@ -18,8 +18,9 @@ public class FlexContainer : MonoBehaviour
     public int MaxDiffuseParticles = 0;
     public List<FlexEmitter> emitters;
     public ParticleSystem FluidRenderer;
-    public Color32 ParticleColour;
-    public Color32 TrackingColour;
+    [System.NonSerialized]
+    public Color32[] ParticleColours;
+    //public Color32 TrackingColour;
     //public float InverseParticleMass = 1;
     public float RParticleRadius = 0.15f;
     public int Substeps = 1;
@@ -93,16 +94,16 @@ public class FlexContainer : MonoBehaviour
     unsafe NvFlexBuffer* rotationsBuffer;
     unsafe NvFlexBuffer* flagsBuffer;
 
-    unsafe Vector4* particles;
-    unsafe Vector3* velocities;
-    unsafe int* phases;
+    public unsafe Vector4* particles;
+    public unsafe Vector3* velocities;
+    public unsafe int* phases;
     unsafe NvFlexCollisionGeometry* geometry;
     unsafe Vector4* positions;
     unsafe XQuat<float>* rotations;
     unsafe int* flags;
 
-    int SlotsUsed;
-    int CurrentSlot;
+    public int SlotsUsed;
+    public int CurrentSlot;
 
     bool ShapesChanged = true;
     FlexCollider[] Shapes;
@@ -213,12 +214,17 @@ public class FlexContainer : MonoBehaviour
         public int x, y, z;
     }
 
-    SimBuffers GBuffers = new SimBuffers();
+    public SimBuffers GBuffers = new SimBuffers();
+
+    public Action MappingQueue;
+    public Action InbetweenQueue;
+    public Action UnmappingQueue;
+    public Action BeforeSolverTickQueue;
+    public Action AfterSolverTickQueue;
 
     // Start is called before the first frame update
     void Start()
     {
-
         Shapes = (FlexCollider[])FindObjectsOfType(typeof(FlexCollider));
 
         unsafe
@@ -278,11 +284,16 @@ public class FlexContainer : MonoBehaviour
             rotations = (XQuat<float>*)Methods.NvFlexMap(rotationsBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
             flags = (int*)Methods.NvFlexMap(flagsBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
 
-            EmitParticles();
-            RenderParticles();
+            MappingQueue?.Invoke();
+
+            InbetweenQueue?.Invoke();
+
+            //RenderParticles();
             DealWithShapes();
             WavePlanes();
             fixed (NvFlexParams* SolverParamsPtr = &SolverParams) { Methods.NvFlexSetParams(solver, SolverParamsPtr); }
+
+            UnmappingQueue?.Invoke();
 
             GBuffers.UnmapVectors();
 
@@ -309,7 +320,11 @@ public class FlexContainer : MonoBehaviour
 
             Methods.NvFlexSetActiveCount(solver, SlotsUsed);
 
+            BeforeSolverTickQueue?.Invoke();
+
             Methods.NvFlexUpdateSolver(solver, Time.deltaTime, Substeps, bfalse);
+
+            AfterSolverTickQueue?.Invoke();
 
             GBuffers.GetBuffers();
 
@@ -340,62 +355,6 @@ public class FlexContainer : MonoBehaviour
             Methods.NvFlexDestroySolver(solver);
             Methods.NvFlexShutdown(library);
         }
-    }
-
-    void EmitParticles()
-    {
-        foreach (FlexEmitter emitter in emitters)
-        {
-            if (emitter.emit)
-            {
-                emitter.emit = false;
-                unsafe
-                {
-                    //int ActiveCount = Methods.NvFlexGetActiveCount(solver);
-
-                    for (int i = 0; i < emitter.ParticlesPerTime; i++)
-                    {
-                        GBuffers.Positions.data[CurrentSlot] = new Vector4(emitter.transform.position.x + Random.Range(-emitter.Spread, emitter.Spread), emitter.transform.position.y + Random.Range(-emitter.Spread, emitter.Spread), emitter.transform.position.z + Random.Range(-emitter.Spread, emitter.Spread), emitter.InverseMass);
-                        GBuffers.Velocities.data[CurrentSlot] = new Vector3(emitter.VelocityX, emitter.VelocityY, emitter.VelocityZ);
-                        GBuffers.Phases.data[CurrentSlot] = Methods.NvFlexMakePhaseWithChannels(0, (int)NvFlexPhase.eNvFlexPhaseSelfCollide | (int)NvFlexPhase.eNvFlexPhaseFluid, (int)NvFlexPhase.eNvFlexPhaseShapeChannel0);
-                        
-                        SlotsUsed++;
-                        Mathf.Clamp(SlotsUsed, 0, MaxParticles);
-                        CurrentSlot++;
-                        if (CurrentSlot >= MaxParticles)
-                        {
-                            CurrentSlot = 0;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    void RenderParticles()
-    {
-        var RParticles = new ParticleSystem.Particle[SlotsUsed];
-        var FluidRendererMain = FluidRenderer.main;
-        FluidRendererMain.maxParticles = MaxParticles;
-
-        unsafe
-        {
-            for (int i = 0; i < RParticles.Length; i++)
-            {
-                RParticles[i].position = GBuffers.Positions.data[i];
-                RParticles[i].startSize = RParticleRadius;
-                if (i == 2)
-                {
-                    RParticles[i].startColor = TrackingColour;
-                }
-                else
-                {
-                    RParticles[i].startColor = ParticleColour;
-                }
-
-            }
-        }
-        FluidRenderer.SetParticles(RParticles);
     }
 
     void AssignPlanes()
