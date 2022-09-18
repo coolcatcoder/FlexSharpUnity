@@ -851,9 +851,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxParticles: 100000
   MaxDiffuseParticles: 0
-  emitters:
-  - {fileID: 1857817460}
-  FluidRenderer: {fileID: 1663408939}
   RParticleRadius: 0.5
   Substeps: 2
   Plane0Index0: 0
@@ -6680,7 +6677,7 @@ MonoBehaviour:
   Container: {fileID: 886319215}
   ParticlesPerTime: 7
   SecondsBetween: 0.03
-  SecondsTillStop: 100
+  SecondsTillStop: Infinity
   emit: 0
   VelocityX: 0
   VelocityY: 15

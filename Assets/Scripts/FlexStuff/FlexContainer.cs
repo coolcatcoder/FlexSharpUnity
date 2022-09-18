@@ -16,12 +16,8 @@ public class FlexContainer : MonoBehaviour
 
     public int MaxParticles = 1000;
     public int MaxDiffuseParticles = 0;
-    public List<FlexEmitter> emitters;
-    public ParticleSystem FluidRenderer;
     [System.NonSerialized]
     public Color32[] ParticleColours;
-    //public Color32 TrackingColour;
-    //public float InverseParticleMass = 1;
     public float RParticleRadius = 0.15f;
     public int Substeps = 1;
 
@@ -86,17 +82,17 @@ public class FlexContainer : MonoBehaviour
     unsafe NvFlexSolver* solver;
     public NvFlexParams SolverParams;
 
-    unsafe NvFlexBuffer* particleBuffer;
-    unsafe NvFlexBuffer* velocityBuffer;
-    unsafe NvFlexBuffer* phaseBuffer;
+    //unsafe NvFlexBuffer* particleBuffer;
+    //unsafe NvFlexBuffer* velocityBuffer;
+    //unsafe NvFlexBuffer* phaseBuffer;
     unsafe NvFlexBuffer* geometryBuffer;
     unsafe NvFlexBuffer* positionsBuffer;
     unsafe NvFlexBuffer* rotationsBuffer;
     unsafe NvFlexBuffer* flagsBuffer;
 
-    public unsafe Vector4* particles;
-    public unsafe Vector3* velocities;
-    public unsafe int* phases;
+    //public unsafe Vector4* particles;
+    //public unsafe Vector3* velocities;
+    //public unsafe int* phases;
     unsafe NvFlexCollisionGeometry* geometry;
     unsafe Vector4* positions;
     unsafe XQuat<float>* rotations;

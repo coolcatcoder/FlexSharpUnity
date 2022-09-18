@@ -392,6 +392,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &342538473
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -479,6 +480,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &429544491
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -706,6 +708,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &589655020
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -905,6 +908,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &590330737
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -992,6 +996,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &613085899
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1254,6 +1259,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &1036192931
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1343,6 +1349,7 @@ GameObject:
   - component: {fileID: 1143146134}
   - component: {fileID: 1143146136}
   - component: {fileID: 1143146135}
+  - component: {fileID: 1143146137}
   m_Layer: 0
   m_Name: Fluid Render Test
   m_TagString: Untagged
@@ -6144,6 +6151,20 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1143146137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143146133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4ec1d7780aa154cb8b057dd41513bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Container: {fileID: 1205042146}
+  FluidRenderer: {fileID: 1143146136}
 --- !u!1 &1164514113
 GameObject:
   m_ObjectHideFlags: 0
@@ -6293,6 +6314,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &1164514119
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6374,15 +6396,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxParticles: 100000
   MaxDiffuseParticles: 0
-  emitters:
-  - {fileID: 1907235147}
-  FluidRenderer: {fileID: 1143146136}
-  ParticleColour:
-    serializedVersion: 2
-    rgba: 4290110740
-  TrackingColour:
-    serializedVersion: 2
-    rgba: 4290110740
   RParticleRadius: 0.5
   Substeps: 1
   Plane0Index0: 0
@@ -6506,6 +6519,8 @@ MonoBehaviour:
     numPlanes: 0
     relaxationMode: 1
     relaxationFactor: 1
+  SlotsUsed: 0
+  CurrentSlot: 0
 --- !u!4 &1205042147
 Transform:
   m_ObjectHideFlags: 0
@@ -6628,6 +6643,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!114 &1569541152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6903,6 +6919,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &1689357605
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6990,6 +7007,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &1744446867
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7108,6 +7126,7 @@ MonoBehaviour:
   ShapeMysteryPower: 0
   Dynamic: 1
   Trigger: 0
+  TriMesh: {fileID: 0}
 --- !u!23 &1905825068
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7313,6 +7332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0299f55aee432343987aefbcbc6995b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 1205042146}
   ParticlesPerTime: 65
   SecondsBetween: 0.1
   SecondsTillStop: 10
@@ -7322,6 +7342,11 @@ MonoBehaviour:
   VelocityZ: 0
   Spread: 20
   InverseMass: 1
+  Colours:
+  - serializedVersion: 2
+    rgba: 14148140
+  - serializedVersion: 2
+    rgba: 13576903
   debug: 0
 --- !u!4 &1907235148
 Transform:
