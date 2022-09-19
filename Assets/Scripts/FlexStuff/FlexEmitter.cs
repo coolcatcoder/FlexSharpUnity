@@ -59,9 +59,9 @@ public class FlexEmitter : MonoBehaviour
 
             for (int i = 0; i < ParticlesPerTime; i++)
             {
-                Container.GBuffers.Positions.data[Container.CurrentSlot] = new Vector4(transform.position.x + Random.Range(-Spread, Spread), transform.position.y + Random.Range(-Spread, Spread), transform.position.z + Random.Range(-Spread, Spread), InverseMass);
-                Container.GBuffers.Velocities.data[Container.CurrentSlot] = new Vector3(VelocityX, VelocityY, VelocityZ);
-                Container.GBuffers.Phases.data[Container.CurrentSlot] = Methods.NvFlexMakePhaseWithChannels(0, (int)NvFlexPhase.eNvFlexPhaseSelfCollide | (int)NvFlexPhase.eNvFlexPhaseFluid, (int)NvFlexPhase.eNvFlexPhaseShapeChannel0);
+                Container.PBuf.Positions.data[Container.CurrentSlot] = new Vector4(transform.position.x + Random.Range(-Spread, Spread), transform.position.y + Random.Range(-Spread, Spread), transform.position.z + Random.Range(-Spread, Spread), InverseMass);
+                Container.PBuf.Velocities.data[Container.CurrentSlot] = new Vector3(VelocityX, VelocityY, VelocityZ);
+                Container.PBuf.Phases.data[Container.CurrentSlot] = Methods.NvFlexMakePhaseWithChannels(0, (int)NvFlexPhase.eNvFlexPhaseSelfCollide | (int)NvFlexPhase.eNvFlexPhaseFluid, (int)NvFlexPhase.eNvFlexPhaseShapeChannel0);
                 Container.ParticleColours[Container.CurrentSlot] = Colours[Random.Range(0,Colours.Length)];
 
                 Container.SlotsUsed++;

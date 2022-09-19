@@ -33,7 +33,7 @@ public class FlexRenderer : MonoBehaviour
         {
             for (int i = 0; i < RParticles.Length; i++)
             {
-                RParticles[i].position = Container.GBuffers.Positions.data[i];
+                RParticles[i].position = Container.PBuf.Positions.data[i];
                 RParticles[i].startSize = Container.RParticleRadius;
                 RParticles[i].startColor = Container.ParticleColours[i];
 
