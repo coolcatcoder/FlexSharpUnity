@@ -82,22 +82,6 @@ public class FlexContainer : MonoBehaviour
     unsafe NvFlexSolver* Solver;
     public NvFlexParams SolverParams;
 
-    //unsafe NvFlexBuffer* particleBuffer;
-    //unsafe NvFlexBuffer* velocityBuffer;
-    //unsafe NvFlexBuffer* phaseBuffer;
-    //unsafe NvFlexBuffer* geometryBuffer;
-    //unsafe NvFlexBuffer* positionsBuffer;
-    //unsafe NvFlexBuffer* rotationsBuffer;
-    //unsafe NvFlexBuffer* flagsBuffer;
-
-    //public unsafe Vector4* particles;
-    //public unsafe Vector3* velocities;
-    //public unsafe int* phases;
-    //unsafe NvFlexCollisionGeometry* geometry;
-    //unsafe Vector4* positions;
-    //unsafe XQuat<float>* rotations;
-    //unsafe int* flags;
-
     public int SlotsUsed;
     public int CurrentSlot;
 
@@ -148,62 +132,6 @@ public class FlexContainer : MonoBehaviour
         public void Destroy()
         {
             Methods.NvFlexFreeBuffer(buffer);
-        }
-    }
-
-    public struct SimBuffers //simulation buffers
-    {
-        unsafe public NvFlexSolver* solver;
-
-        public FVector<Vector4> Positions;
-        public FVector<Vector3> Velocities;
-        public FVector<int> Phases;
-
-        //public FVector<NvFlexCollisionGeometry> ShapeGeometry;
-        //public FVector<Vector4> ShapePositions;
-        //public FVector<XQuat<float>> ShapeRotations;
-        //public FVector<int> ShapeFlags;
-
-        public void InitVectors()
-        {
-            Positions.InitVec();
-            Velocities.InitVec();
-            Phases.InitVec();
-        }
-
-        public void MapVectors()
-        {
-            Positions.MapVec();
-            Velocities.MapVec();
-            Phases.MapVec();
-        }
-
-        public void UnmapVectors()
-        {
-            Positions.UnmapVec();
-            Velocities.UnmapVec();
-            Phases.UnmapVec();
-        }
-
-        unsafe public void SendBuffers()
-        {
-            Methods.NvFlexSetParticles(solver, Positions.buffer, null);
-            Methods.NvFlexSetVelocities(solver, Velocities.buffer, null);
-            Methods.NvFlexSetPhases(solver, Phases.buffer, null);
-        }
-
-        unsafe public void GetBuffers()
-        {
-            Methods.NvFlexGetParticles(solver, Positions.buffer, null);
-            Methods.NvFlexGetVelocities(solver, Velocities.buffer, null);
-            Methods.NvFlexGetPhases(solver, Phases.buffer, null);
-        }
-
-        public void DestroyVectors()
-        {
-            Positions.Destroy();
-            Velocities.Destroy();
-            Phases.Destroy();
         }
     }
 
@@ -315,14 +243,13 @@ public class FlexContainer : MonoBehaviour
             Rotations.Destroy();
             Flags.Destroy();
         }
-    }
 
-    public struct int3
-    {
-        public int x, y, z;
+        public int AddShape()
+        {
+            NumShapes += 1;
+            return NumShapes - 1;
+        }
     }
-
-    //public SimBuffers GBuffers = new SimBuffers();
 
     public ParticleBuffers PBuf = new ParticleBuffers();
     public ShapeBuffers SBuf = new ShapeBuffers();
@@ -336,29 +263,18 @@ public class FlexContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Shapes = (FlexCollider[])FindObjectsOfType(typeof(FlexCollider));
-
         unsafe
         {
             Library = Methods.NvFlexInit();
             fixed(NvFlexSolverDesc* SolverDescPtr = &SolverDesc) { Methods.NvFlexSetSolverDescDefaults(SolverDescPtr); }
             SolverDesc.maxParticles = MaxParticles;
             SolverDesc.maxDiffuseParticles = MaxDiffuseParticles;
-            //solverDesc.featureMode = NvFlexFeatureMode.eNvFlexFeatureModeSimpleFluids;
 
             fixed (NvFlexSolverDesc* solverDescPtr = &SolverDesc) { Solver = Methods.NvFlexCreateSolver(Library, solverDescPtr); }
 
             AssignPlanes();
             fixed (NvFlexParams* SolverParamsPtr = &SolverParams) { Methods.NvFlexSetParams(Solver, SolverParamsPtr); }
             Debug.Log(SolverParams.gravity[1]);
-
-            //GBuffers.solver = Solver;
-
-            //GBuffers.Positions = new FVector<Vector4>(Library, MaxParticles);
-            //GBuffers.Velocities = new FVector<Vector3>(Library, MaxParticles);
-            //GBuffers.Phases = new FVector<int>(Library, MaxParticles);
-
-            //GBuffers.InitVectors();
 
             PBuf.Solver = Solver;
 
@@ -367,18 +283,6 @@ public class FlexContainer : MonoBehaviour
             PBuf.Phases = new FVector<int>(Library, MaxParticles);
 
             PBuf.InitVectors();
-
-            //particleBuffer = Methods.NvFlexAllocBuffer(library, MaxParticles, 16, NvFlexBufferType.eNvFlexBufferHost);
-            //velocityBuffer = Methods.NvFlexAllocBuffer(library, MaxParticles, 16, NvFlexBufferType.eNvFlexBufferHost);
-            //phaseBuffer = Methods.NvFlexAllocBuffer(library, MaxParticles, 4, NvFlexBufferType.eNvFlexBufferHost);
-
-            //geometryBuffer = Methods.NvFlexAllocBuffer(Library, Shapes.Length, sizeof(NvFlexCollisionGeometry), NvFlexBufferType.eNvFlexBufferHost);
-            //positionsBuffer = Methods.NvFlexAllocBuffer(Library, Shapes.Length, sizeof(float) * 4, NvFlexBufferType.eNvFlexBufferHost);
-            //rotationsBuffer = Methods.NvFlexAllocBuffer(Library, Shapes.Length, sizeof(XQuat<float>), NvFlexBufferType.eNvFlexBufferHost);
-            //flagsBuffer = Methods.NvFlexAllocBuffer(Library, Shapes.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
-
-            InitWeirdShapes();
-
         }
     }
 
@@ -386,12 +290,11 @@ public class FlexContainer : MonoBehaviour
     {
         unsafe
         {
-            if (FirstTime)
+            if (FirstTime && (SBuf.NumShapes!=0))
             {
                 FirstTime = false;
 
                 SBuf.Solver = Solver;
-                SBuf.NumShapes = Shapes.Length;
 
                 SBuf.Geometry = new FVector<NvFlexCollisionGeometry>(Library, SBuf.NumShapes);
                 SBuf.Positions = new FVector<Vector4>(Library, SBuf.NumShapes);
@@ -406,21 +309,10 @@ public class FlexContainer : MonoBehaviour
             PBuf.MapVectors();
             SBuf.MapVectors();
 
-            //particles = (Vector4*)Methods.NvFlexMap(particleBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
-            //velocities = (Vector3*)Methods.NvFlexMap(velocityBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
-            //phases = (int*)Methods.NvFlexMap(phaseBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
-
-            //geometry = (NvFlexCollisionGeometry*)Methods.NvFlexMap(geometryBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
-            //positions = (Vector4*)Methods.NvFlexMap(positionsBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
-            //rotations = (XQuat<float>*)Methods.NvFlexMap(rotationsBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
-            //flags = (int*)Methods.NvFlexMap(flagsBuffer, (int)NvFlexMapFlags.eNvFlexMapWait);
-
             MappingQueue?.Invoke();
 
             InbetweenQueue?.Invoke();
 
-            //RenderParticles();
-            DealWithShapes();
             WavePlanes();
             fixed (NvFlexParams* SolverParamsPtr = &SolverParams) { Methods.NvFlexSetParams(Solver, SolverParamsPtr); }
 
@@ -429,27 +321,8 @@ public class FlexContainer : MonoBehaviour
             PBuf.UnmapVectors();
             SBuf.UnmapVectors();
 
-            //Methods.NvFlexUnmap(particleBuffer);
-            //Methods.NvFlexUnmap(velocityBuffer);
-            //Methods.NvFlexUnmap(phaseBuffer);
-
-            //Methods.NvFlexUnmap(geometryBuffer);
-            //Methods.NvFlexUnmap(positionsBuffer);
-            //Methods.NvFlexUnmap(rotationsBuffer);
-            //Methods.NvFlexUnmap(flagsBuffer);
-
             PBuf.SendBuffers();
             SBuf.SendBuffers();
-
-            //Methods.NvFlexSetParticles(solver, particleBuffer, null);
-            //Methods.NvFlexSetVelocities(solver, velocityBuffer, null);
-            //Methods.NvFlexSetPhases(solver, phaseBuffer, null);
-
-            //if (ShapesChanged)
-            //{
-                //Methods.NvFlexSetShapes(Solver, geometryBuffer, positionsBuffer, rotationsBuffer, null, null, flagsBuffer, Shapes.Length);
-            //}
-            
 
             Methods.NvFlexSetActiveCount(Solver, SlotsUsed);
 
@@ -460,11 +333,6 @@ public class FlexContainer : MonoBehaviour
             AfterSolverTickQueue?.Invoke();
 
             PBuf.GetBuffers();
-            //SBuf.GetBuffers();
-
-            //Methods.NvFlexGetParticles(solver, particleBuffer, null);
-            //Methods.NvFlexGetVelocities(solver, velocityBuffer, null);
-            //Methods.NvFlexGetPhases(solver, phaseBuffer, null);
         }
     }
 
@@ -474,19 +342,8 @@ public class FlexContainer : MonoBehaviour
         unsafe { Debug.Log(Methods.NvFlexGetActiveCount(Solver)); }
         unsafe
         {
-            DestroyWeirdShapes();
-
             PBuf.DestroyVectors();
             SBuf.DestroyVectors();
-
-            //Methods.NvFlexFreeBuffer(particleBuffer);
-            //Methods.NvFlexFreeBuffer(velocityBuffer);
-            //Methods.NvFlexFreeBuffer(phaseBuffer);
-
-            //Methods.NvFlexFreeBuffer(geometryBuffer);
-            //Methods.NvFlexFreeBuffer(positionsBuffer);
-            //Methods.NvFlexFreeBuffer(rotationsBuffer);
-            //Methods.NvFlexFreeBuffer(flagsBuffer);
 
             Methods.NvFlexDestroySolver(Solver);
             Methods.NvFlexShutdown(Library);
@@ -555,94 +412,6 @@ public class FlexContainer : MonoBehaviour
                         Debug.Log("indices_success");
 
                         break;
-                }
-            }
-        }
-    }
-
-    void DealWithShapes()
-    {
-        unsafe
-        {
-            for (int i = 0; i < Shapes.Length; i++)
-            {
-                if (Shapes[i].transform.hasChanged)
-                {
-                    //Debug.Log("Shapes have changed.");
-                    SBuf.ShapesChanged = true;
-                    Shapes[i].transform.hasChanged = false;
-
-                    var rotation = new XQuat<float>();
-                    rotation.w = Shapes[i].transform.rotation.w;
-                    rotation.x = Shapes[i].transform.rotation.x;
-                    rotation.y = Shapes[i].transform.rotation.y;
-                    rotation.z = Shapes[i].transform.rotation.z;
-                    SBuf.Rotations.data[i] = rotation;
-
-                    SBuf.Positions.data[i] = new Vector4(Shapes[i].transform.position.x, Shapes[i].transform.position.y, Shapes[i].transform.position.z, Shapes[i].ShapeMysteryPower);
-
-                    SBuf.Flags.data[i] = Methods.NvFlexMakeShapeFlagsWithChannels(Shapes[i].Shape, Shapes[i].Dynamic, (int)Shapes[i].PhaseSettings);
-                    if (Shapes[i].Trigger) { SBuf.Flags.data[i] |= (int)NvFlexCollisionShapeFlags.eNvFlexShapeFlagTrigger; }
-
-                    switch (Shapes[i].Shape)
-                    {
-                        case NvFlexCollisionShapeType.eNvFlexShapeBox:
-                            SBuf.Geometry.data[i].box.halfExtents[0] = Shapes[i].transform.lossyScale.x / 2;
-                            SBuf.Geometry.data[i].box.halfExtents[1] = Shapes[i].transform.lossyScale.y / 2;
-                            SBuf.Geometry.data[i].box.halfExtents[2] = Shapes[i].transform.lossyScale.z / 2;
-                            break;
-                        case NvFlexCollisionShapeType.eNvFlexShapeCapsule:
-                            break;
-                        case NvFlexCollisionShapeType.eNvFlexShapeConvexMesh:
-                            break;
-                        case NvFlexCollisionShapeType.eNvFlexShapeSDF:
-                            break;
-                        case NvFlexCollisionShapeType.eNvFlexShapeSphere:
-                            SBuf.Geometry.data[i].sphere.radius = Shapes[i].transform.lossyScale.x / 2;
-                            break;
-                        case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
-                            var RWIndices = (int*)Methods.NvFlexMap(Shapes[i].Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
-                            var RWVertices = (Vector3*)Methods.NvFlexMap(Shapes[i].Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
-
-
-                            for (int k = 0; k < Shapes[i].TriMesh.vertices.Length; k++)
-                            {
-                                RWVertices[k] = Shapes[i].TriMesh.vertices[k];
-                            }
-
-                            for (int k = 0; k < Shapes[i].TriMesh.triangles.Length; k++)
-                            {
-                                RWIndices[k] = Shapes[i].TriMesh.triangles[k];
-
-                                Debug.DrawLine(RWVertices[RWIndices[k]], RWVertices[RWIndices[k + 1]], Color.blue, float.PositiveInfinity);
-                            }
-
-                            for (int k = 0; k < Shapes[i].TriMesh.triangles.Length; k += 3)
-                            {
-                                Debug.DrawLine(RWVertices[RWIndices[k]], RWVertices[RWIndices[k + 1]], Color.blue, float.PositiveInfinity);
-                                Debug.DrawLine(RWVertices[RWIndices[k + 1]], RWVertices[RWIndices[k + 2]], Color.blue, float.PositiveInfinity);
-                                Debug.DrawLine(RWVertices[RWIndices[k + 2]], RWVertices[RWIndices[k]], Color.blue, float.PositiveInfinity);
-                            }
-
-                            Methods.NvFlexUnmap(Shapes[i].Indices);
-                            Methods.NvFlexUnmap(Shapes[i].Vertices);
-
-                            var min = Shapes[i].TriMesh.bounds.min * 2;
-                            var LowerBoundsPtr = &min;
-
-                            var max = Shapes[i].TriMesh.bounds.max * 2;
-                            var UpperBoundsPtr = &max;
-
-                            Methods.NvFlexUpdateTriangleMesh(Library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
-                            //Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, null, null);
-
-                            SBuf.Geometry.data[i].triMesh.mesh = Shapes[i].MeshId;
-                            SBuf.Geometry.data[i].triMesh.scale[0] = Shapes[i].transform.lossyScale.x;
-                            SBuf.Geometry.data[i].triMesh.scale[1] = Shapes[i].transform.lossyScale.y;
-                            SBuf.Geometry.data[i].triMesh.scale[2] = Shapes[i].transform.lossyScale.z;
-
-                            break;
-                    }
                 }
             }
         }
