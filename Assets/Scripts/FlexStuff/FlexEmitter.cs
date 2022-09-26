@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FlexSharp;
+using Unity.Burst;
 
 public class FlexEmitter : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class FlexEmitter : MonoBehaviour
     public float InverseMass = 1;
     public Color32[] Colours;
     public bool debug = false;
+    public bool Burst;
 
     float SecondsUntilNext = 0;
 
@@ -35,7 +37,16 @@ public class FlexEmitter : MonoBehaviour
         if (SecondsUntilNext <= 0 &! (SecondsTillStop <= 0))
         {
             SecondsTillStop -= Time.deltaTime;
-            Container.InbetweenQueue += EmitParticles;
+
+            if (Burst)
+            {
+                Container.InbetweenQueue += BurstEmitParticles;
+            }
+            else
+            {
+                Container.InbetweenQueue += EmitParticles;
+            }
+
             SecondsUntilNext = SecondsBetween;
             if (debug)
             {
@@ -63,6 +74,32 @@ public class FlexEmitter : MonoBehaviour
                 Container.PBuf.Velocities.data[Container.CurrentSlot] = new Vector3(VelocityX, VelocityY, VelocityZ);
                 Container.PBuf.Phases.data[Container.CurrentSlot] = Methods.NvFlexMakePhaseWithChannels(0, (int)NvFlexPhase.eNvFlexPhaseSelfCollide | (int)NvFlexPhase.eNvFlexPhaseFluid, (int)NvFlexPhase.eNvFlexPhaseShapeChannel0);
                 Container.ParticleColours[Container.CurrentSlot] = Colours[Random.Range(0,Colours.Length)];
+
+                Container.SlotsUsed++;
+                Mathf.Clamp(Container.SlotsUsed, 0, Container.MaxParticles);
+                Container.CurrentSlot++;
+                if (Container.CurrentSlot >= Container.MaxParticles - 1)
+                {
+                    Container.CurrentSlot = 0;
+                }
+            }
+        }
+    }
+
+    [BurstCompile]
+    void BurstEmitParticles()
+    {
+        Container.InbetweenQueue -= EmitParticles;
+        unsafe
+        {
+            //int ActiveCount = Methods.NvFlexGetActiveCount(solver);
+
+            for (int i = 0; i < ParticlesPerTime; i++)
+            {
+                Container.PBuf.Positions.data[Container.CurrentSlot] = new Vector4(transform.position.x + Random.Range(-Spread, Spread), transform.position.y + Random.Range(-Spread, Spread), transform.position.z + Random.Range(-Spread, Spread), InverseMass);
+                Container.PBuf.Velocities.data[Container.CurrentSlot] = new Vector3(VelocityX, VelocityY, VelocityZ);
+                Container.PBuf.Phases.data[Container.CurrentSlot] = Methods.NvFlexMakePhaseWithChannels(0, (int)NvFlexPhase.eNvFlexPhaseSelfCollide | (int)NvFlexPhase.eNvFlexPhaseFluid, (int)NvFlexPhase.eNvFlexPhaseShapeChannel0);
+                Container.ParticleColours[Container.CurrentSlot] = Colours[Random.Range(0, Colours.Length)];
 
                 Container.SlotsUsed++;
                 Mathf.Clamp(Container.SlotsUsed, 0, Container.MaxParticles);

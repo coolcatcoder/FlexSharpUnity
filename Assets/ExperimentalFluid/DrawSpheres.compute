@@ -1,0 +1,27 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+
+float4x4 CoolMatrix;
+
+struct Sphere
+{
+    float Radius;
+    float3 Position;
+    float4 Colour;
+};
+
+RWStructuredBuffer<Sphere> Spheres;
+
+[numthreads(10,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    // TODO: insert actual code here!
+    
+    float2 ScreenPos = mul(CoolMatrix, float4(Spheres[id.x].Position, 1.0));
+
+    Result[ScreenPos.xy] = Spheres[id.x].Colour;
+}

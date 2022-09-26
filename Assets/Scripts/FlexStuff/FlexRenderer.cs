@@ -33,10 +33,13 @@ public class FlexRenderer : MonoBehaviour
         if (BurstRender)
         {
             Container.InbetweenQueue += RenderParticlesBurst;
-            Container.AfterSolverTickQueue += PlayParticles;
+            //Container.AfterSolverTickQueue += PlayParticles;
         }
 
         job.PColours = new NativeArray<Color32>(Container.ParticleColours.Length, Allocator.Persistent);
+
+        //var Hope = GetComponent<ParticleSystemRenderer>();
+        //Hope.allowOcclusionWhenDynamic = false;
     }
 
     // Update is called once per frame
@@ -70,25 +73,22 @@ public class FlexRenderer : MonoBehaviour
 
     void OnParticleUpdateJobScheduled()
     {
-        //RenderParticlesBurst();
-        //Debug.Log("testing?");
+        if (Container.SlotsUsed > 1)
+        {
+            var mainThreadParticles = new ParticleSystem.Particle[Container.SlotsUsed];
+            mainThreadParticles[0].position = new Vector3(-1000, -1000, -1000);
+            mainThreadParticles[1].position = new Vector3(1000, 1000, 1000);
 
-        var mainThreadParticles = new ParticleSystem.Particle[Container.SlotsUsed];
-
-        FluidRenderer.SetParticles(mainThreadParticles);
+            FluidRenderer.SetParticles(mainThreadParticles);
+        }
 
         if (FluidRenderer.particleCount > 1)
         {
-            Debug.Log("testing");
             job.Schedule(FluidRenderer).Complete();
         }
-
-        //Debug.Log("Testing done?");
-
-        //job.PColours.Dispose();
     }
 
-    //[BurstCompile]
+    [BurstCompile]
     struct UpdateParticlesJob : IJobParticleSystem
     {
         [ReadOnly]
