@@ -1338,7 +1338,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -7232,6 +7232,7 @@ MonoBehaviour:
   - serializedVersion: 2
     rgba: 13576903
   debug: 0
+  Burst: 0
 --- !u!4 &1907235148
 Transform:
   m_ObjectHideFlags: 0
