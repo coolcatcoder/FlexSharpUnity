@@ -17,10 +17,15 @@ public class FlexRenderer : MonoBehaviour
 
     public bool BurstRender = false;
 
+    public Vector3 MinRenderPos = new Vector3(-1000, -1000, -1000);
+    public Vector3 MaxRenderPos = new Vector3(1000, 1000, 1000);
+
     bool FirstTime = true;
 
     UpdateParticlesJob job = new UpdateParticlesJob();
     //ParticleSystem.Particle[] mainThreadParticles;
+
+    ParticleSystem.Particle[] mainThreadParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +45,10 @@ public class FlexRenderer : MonoBehaviour
 
         //var Hope = GetComponent<ParticleSystemRenderer>();
         //Hope.allowOcclusionWhenDynamic = false;
+
+        mainThreadParticles = new ParticleSystem.Particle[Container.MaxParticles];
+        mainThreadParticles[0].position = MinRenderPos;
+        mainThreadParticles[1].position = MaxRenderPos;
     }
 
     // Update is called once per frame
@@ -75,11 +84,11 @@ public class FlexRenderer : MonoBehaviour
     {
         if (Container.SlotsUsed > 1)
         {
-            var mainThreadParticles = new ParticleSystem.Particle[Container.SlotsUsed];
-            mainThreadParticles[0].position = new Vector3(-1000, -1000, -1000);
-            mainThreadParticles[1].position = new Vector3(1000, 1000, 1000);
+            //mainThreadParticles = new ParticleSystem.Particle[Container.SlotsUsed];
+            //mainThreadParticles[0].position = MinRenderPos;
+            //mainThreadParticles[1].position = MaxRenderPos;
 
-            FluidRenderer.SetParticles(mainThreadParticles);
+            FluidRenderer.SetParticles(mainThreadParticles, Container.SlotsUsed);
         }
 
         if (FluidRenderer.particleCount > 1)
