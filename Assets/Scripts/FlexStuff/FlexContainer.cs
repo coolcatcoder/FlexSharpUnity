@@ -195,6 +195,11 @@ public class FlexContainer : MonoBehaviour
         public FVector<XQuat<float>> Rotations;
         public FVector<int> Flags;
 
+        public FVector<Vector4> ContactPlanes;
+        public FVector<Vector4> ContactVelocities;
+        public FVector<int> ContactIndices;
+        public FVector<uint> ContactCounts;
+
         public bool ShapesChanged;
         public int NumShapes;
 
@@ -204,6 +209,11 @@ public class FlexContainer : MonoBehaviour
             Positions.InitVec();
             Rotations.InitVec();
             Flags.InitVec();
+
+            ContactPlanes.InitVec();
+            ContactVelocities.InitVec();
+            ContactIndices.InitVec();
+            ContactCounts.InitVec();
         }
 
         public void MapVectors()
@@ -212,6 +222,11 @@ public class FlexContainer : MonoBehaviour
             Positions.MapVec();
             Rotations.MapVec();
             Flags.MapVec();
+
+            ContactPlanes.MapVec();
+            ContactVelocities.MapVec();
+            ContactIndices.MapVec();
+            ContactCounts.MapVec();
         }
 
         public void UnmapVectors()
@@ -220,6 +235,11 @@ public class FlexContainer : MonoBehaviour
             Positions.UnmapVec();
             Rotations.UnmapVec();
             Flags.UnmapVec();
+
+            ContactPlanes.UnmapVec();
+            ContactVelocities.UnmapVec();
+            ContactIndices.UnmapVec();
+            ContactCounts.UnmapVec();
         }
 
         unsafe public void SendBuffers()
@@ -233,7 +253,8 @@ public class FlexContainer : MonoBehaviour
 
         unsafe public void GetBuffers()
         {
-            Debug.Log("?????? YOU CANT GET SHAPES, THIS FUNCTION SHOULD NEVER RUN!!!!!!!!!!!!!!!!!!!");
+            //Debug.Log("?????? YOU CANT GET SHAPES, THIS FUNCTION SHOULD NEVER RUN!!!!!!!!!!!!!!!!!!!"); Removed cause you can get contacts, so GetBuffers has a purpose now...
+            Methods.NvFlexGetContacts(Solver, ContactPlanes.buffer, ContactVelocities.buffer, ContactIndices.buffer, ContactCounts.buffer);
         }
 
         public void DestroyVectors()
@@ -242,6 +263,11 @@ public class FlexContainer : MonoBehaviour
             Positions.Destroy();
             Rotations.Destroy();
             Flags.Destroy();
+
+            ContactPlanes.Destroy();
+            ContactVelocities.Destroy();
+            ContactIndices.Destroy();
+            ContactCounts.Destroy();
         }
 
         public int AddShape()
@@ -301,6 +327,11 @@ public class FlexContainer : MonoBehaviour
                 SBuf.Rotations = new FVector<XQuat<float>>(Library, SBuf.NumShapes);
                 SBuf.Flags = new FVector<int>(Library, SBuf.NumShapes);
 
+                SBuf.ContactPlanes = new FVector<Vector4>(Library, MaxParticles * 6); // 6 appears to be the max amount of contacts a particle is allowed to have according to triggervolume.h in the demo app
+                SBuf.ContactVelocities = new FVector<Vector4>(Library, MaxParticles * 6);
+                SBuf.ContactIndices = new FVector<int>(Library, MaxParticles);
+                SBuf.ContactCounts = new FVector<uint>(Library, MaxParticles);
+
                 SBuf.InitVectors();
             }
 
@@ -333,6 +364,7 @@ public class FlexContainer : MonoBehaviour
             AfterSolverTickQueue?.Invoke();
 
             PBuf.GetBuffers();
+            SBuf.GetBuffers();
         }
     }
 

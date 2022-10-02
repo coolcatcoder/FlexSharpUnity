@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FlexSharp;
+using UnityEngine.Events;
+using Unity.Jobs;
+using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
+using Unity.Burst;
+
+[System.Serializable]
+public class ParticleIdEvent : UnityEvent<int>
+{
+
+}
 
 public class FlexCollider : MonoBehaviour
 {
@@ -17,6 +28,16 @@ public class FlexCollider : MonoBehaviour
 
     public Mesh TriMesh;
 
+    public bool DetectCollision;
+
+    public ParticleIdEvent MethodToRunOnDetectCollision;
+
+    //public WhenToRun WhenToRunMethodOnCollision; //I hate this name, please someone figure out a better naming scheme for everything in this file just so that this variable can have a better name, please!
+
+    //bool Burst = true; //force on, because burst is better, and trying to have support for both burst and non burst is getting tiresome, feel free to add your own support for non burst if you need to
+
+    public bool debug;
+
     [System.NonSerialized]
     public uint MeshId;
 
@@ -28,10 +49,29 @@ public class FlexCollider : MonoBehaviour
 
     int ShapeIndex;
 
+    public enum WhenToRun
+    {
+        Update,
+        FixedUpdate
+    }
+
+    bool RunMethod;
+
+    [System.NonSerialized]
+    public int ParticleId; // try to avoid using, this is heavilly deprecated
+
+    [System.NonSerialized]
+    public NativeList<int> ParticleIds;
+
     // Start is called before the first frame update
     void Start()
     {
         ShapeIndex = Container.SBuf.AddShape();
+
+        if (DetectCollision)
+        {
+            Container.InbetweenQueue += BurstDealWithCollisions;
+        }
 
         Container.InbetweenQueue += DealWithShape;
     }
@@ -39,7 +79,11 @@ public class FlexCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (RunMethod)
+        {
+            //MethodToRunOnDetectCollision?.Invoke(); deprecated...
+            RunMethod = false;
+        }
     }
 
     void DealWithShape()
@@ -125,5 +169,140 @@ public class FlexCollider : MonoBehaviour
                 }
             }
         }
+    }
+
+    unsafe void DealWithCollisions()
+    {
+        if (debug)
+        {
+            Debug.Log("run");
+        }
+
+        for (int i = 0; i < Container.SlotsUsed; i++)
+        {
+            int ContactIndex = Container.SBuf.ContactIndices.data[i];
+            uint Count = Container.SBuf.ContactCounts.data[ContactIndex];
+
+            if (debug)
+            {
+                Debug.Log(ContactIndex);
+                Debug.Log(Count);
+            }
+
+            for (uint c = 0; c < Count; c++)
+            {
+                Vector4 Velocity = Container.SBuf.ContactVelocities.data[ContactIndex * 6 + c];
+
+                int ContactShapeId = (int)Velocity.w;
+
+                if (ContactShapeId == ShapeIndex)
+                {
+                    ParticleId = i;
+
+                    if (debug)
+                    {
+                        Debug.Log("Collision!");
+                    }
+
+                    //if (WhenToRunMethodOnCollision == WhenToRun.FixedUpdate)
+                    //{
+                        //MethodToRunOnDetectCollision?.Invoke(); deprecate
+                    //}
+                    //else
+                    //{
+                        //RunMethod = true;
+                    //}
+                }
+                else if (debug)
+                {
+                    Debug.Log(ContactShapeId);
+                }
+            }
+        }
+    }
+
+    [BurstCompile]
+    public unsafe struct CollisionsJob : IJob
+    {
+        //public FlexContainer FContainer;
+        public int _SlotsUsed;
+        [NativeDisableUnsafePtrRestriction]
+        public int* ContactIndicesData;
+        [NativeDisableUnsafePtrRestriction]
+        public uint* ContactCountsData;
+        [NativeDisableUnsafePtrRestriction]
+        public Vector4* ContactVelocitiesData;
+        public int _ShapeIndex;
+        public NativeList<int> _ParticleIds;
+        //public WhenToRun _WhenToRunMethodOnCollision;
+        //public UnityEvent _MethodToRunOnDetectCollision;
+        //public NativeArray<bool> _RunMethod;
+
+        public unsafe void Execute()
+        {
+            for (int i = 0; i < _SlotsUsed; i++)
+            {
+                int ContactIndex = ContactIndicesData[i];
+                uint Count = ContactCountsData[ContactIndex];
+
+                for (uint c = 0; c < Count; c++)
+                {
+                    Vector4 Velocity = ContactVelocitiesData[ContactIndex * 6 + c];
+
+                    int ContactShapeId = (int)Velocity.w;
+
+                    if (ContactShapeId == _ShapeIndex)
+                    {
+                        _ParticleIds.Add(i);
+
+                        //Debug.Log("Collision");
+
+                        //if (_WhenToRunMethodOnCollision == WhenToRun.FixedUpdate)
+                        //{
+                        //    _MethodToRunOnDetectCollision?.Invoke();
+                        //}
+                        //else
+                        //{
+                        //    _RunMethod[0] = true;
+                        //}
+                        // icky, dont like, so goodbye you garbage code, guess you will have to run fixed update, oh well
+                    }
+                }
+            }
+        }
+    }
+
+    //[BurstCompile]
+    public unsafe void BurstDealWithCollisions()
+    {
+        ParticleIds = new NativeList<int>(100, Allocator.TempJob);
+
+        CollisionsJob CollisionsJobData = new CollisionsJob();
+
+        //CollisionsJobData.FContainer = Container;
+        CollisionsJobData.ContactIndicesData = Container.SBuf.ContactIndices.data;
+        CollisionsJobData.ContactCountsData = Container.SBuf.ContactCounts.data;
+        CollisionsJobData.ContactVelocitiesData = Container.SBuf.ContactVelocities.data;
+        CollisionsJobData._ShapeIndex = ShapeIndex;
+        CollisionsJobData._ParticleIds = ParticleIds;
+        CollisionsJobData._SlotsUsed = Container.SlotsUsed;
+        //CollisionsJobData._MethodToRunOnDetectCollision = MethodToRunOnDetectCollision;
+
+        JobHandle handle = CollisionsJobData.Schedule();
+        handle.Complete();
+
+        foreach (int PI in ParticleIds)
+        {
+            MethodToRunOnDetectCollision?.Invoke(PI);
+        }
+
+        if (debug)
+        {
+            Debug.Log(ParticleIds.Length);
+        }
+
+        ParticleIds.Dispose();
+
+        
     }
 }
