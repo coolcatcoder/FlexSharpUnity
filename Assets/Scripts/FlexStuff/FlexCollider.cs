@@ -36,6 +36,8 @@ public class FlexCollider : MonoBehaviour
 
     //bool Burst = true; //force on, because burst is better, and trying to have support for both burst and non burst is getting tiresome, feel free to add your own support for non burst if you need to
 
+    public int BatchSize = 256;
+
     public bool debug;
 
     [System.NonSerialized]
@@ -222,26 +224,31 @@ public class FlexCollider : MonoBehaviour
     }
 
     [BurstCompile]
-    public unsafe struct CollisionsJob : IJob
+    public unsafe struct CollisionsJob : IJobParallelFor
     {
         //public FlexContainer FContainer;
-        public int _SlotsUsed;
+        //[ReadOnly]
+        //public int _SlotsUsed;
+        [ReadOnly]
         [NativeDisableUnsafePtrRestriction]
         public int* ContactIndicesData;
+        [ReadOnly]
         [NativeDisableUnsafePtrRestriction]
         public uint* ContactCountsData;
+        [ReadOnly]
         [NativeDisableUnsafePtrRestriction]
         public Vector4* ContactVelocitiesData;
+        [ReadOnly]
         public int _ShapeIndex;
-        public NativeList<int> _ParticleIds;
+        public NativeList<int>.ParallelWriter _ParticleIds;
         //public WhenToRun _WhenToRunMethodOnCollision;
         //public UnityEvent _MethodToRunOnDetectCollision;
         //public NativeArray<bool> _RunMethod;
 
-        public unsafe void Execute()
+        public unsafe void Execute(int i)
         {
-            for (int i = 0; i < _SlotsUsed; i++)
-            {
+            //for (int i = 0; i < _SlotsUsed; i++)
+            //{
                 int ContactIndex = ContactIndicesData[i];
                 uint Count = ContactCountsData[ContactIndex];
 
@@ -253,7 +260,8 @@ public class FlexCollider : MonoBehaviour
 
                     if (ContactShapeId == _ShapeIndex)
                     {
-                        _ParticleIds.Add(i);
+                        //_ParticleIds.Add(i);
+                        _ParticleIds.AddNoResize(i);
 
                         //Debug.Log("Collision");
 
@@ -268,14 +276,14 @@ public class FlexCollider : MonoBehaviour
                         // icky, dont like, so goodbye you garbage code, guess you will have to run fixed update, oh well
                     }
                 }
-            }
+            //}
         }
     }
 
     //[BurstCompile]
     public unsafe void BurstDealWithCollisions()
     {
-        ParticleIds = new NativeList<int>(100, Allocator.TempJob);
+        ParticleIds = new NativeList<int>(Container.SlotsUsed + 300, Allocator.TempJob); //+300 is not required, just for safety incase something goes wrong
 
         CollisionsJob CollisionsJobData = new CollisionsJob();
 
@@ -284,11 +292,11 @@ public class FlexCollider : MonoBehaviour
         CollisionsJobData.ContactCountsData = Container.SBuf.ContactCounts.data;
         CollisionsJobData.ContactVelocitiesData = Container.SBuf.ContactVelocities.data;
         CollisionsJobData._ShapeIndex = ShapeIndex;
-        CollisionsJobData._ParticleIds = ParticleIds;
-        CollisionsJobData._SlotsUsed = Container.SlotsUsed;
+        CollisionsJobData._ParticleIds = ParticleIds.AsParallelWriter();
+        //CollisionsJobData._SlotsUsed = Container.SlotsUsed;
         //CollisionsJobData._MethodToRunOnDetectCollision = MethodToRunOnDetectCollision;
 
-        JobHandle handle = CollisionsJobData.Schedule();
+        JobHandle handle = CollisionsJobData.Schedule(Container.SlotsUsed, BatchSize);
         handle.Complete();
 
         foreach (int PI in ParticleIds)

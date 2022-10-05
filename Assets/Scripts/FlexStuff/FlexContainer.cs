@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 using Methods = FlexSharp.Methods;
 using ExtMethods = FlexSharpExt.Methods;
 using System.Runtime.InteropServices;
+using UnityEditor;
 
 public class FlexContainer : MonoBehaviour
 {
@@ -497,4 +498,42 @@ public class FlexContainer : MonoBehaviour
             SolverParams.planes[4 * plane + 3] = Mathf.Sin(Time.fixedTime) * 3;
         }
     }
+
+#if UNITY_EDITOR
+    [MenuItem("GameObject/Flex/Flex Container", false, 10)]
+    static unsafe void CreateContainer(MenuCommand menuCommand)
+    {
+        GameObject go = new GameObject("Fluid Container");
+        GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
+        Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
+        var con = go.AddComponent<FlexContainer>();
+
+        con.MaxParticles = 100000;
+        con.MaxDiffuseParticles = 0;
+        con.RParticleRadius = 0.5f;
+        con.Substeps = 2;
+
+        con.SolverParams.numIterations = 2;
+        con.SolverParams.gravity[0] = 0;
+        con.SolverParams.gravity[1] = -9.8f;
+        con.SolverParams.gravity[2] = 0;
+        con.SolverParams.radius = 0.5f;
+        con.SolverParams.solidRestDistance = 0.25f;
+        con.SolverParams.fluidRestDistance = 0.25f;
+        con.SolverParams.maxSpeed = float.MaxValue;
+        con.SolverParams.maxAcceleration = 100;
+        con.SolverParams.surfaceTension = 0.04f;
+        con.SolverParams.vorticityConfinement = 80;
+        con.SolverParams.solidPressure = 1;
+        con.SolverParams.buoyancy = 1;
+        con.SolverParams.collisionDistance = 0.125f;
+        con.SolverParams.particleCollisionMargin = 0.0625f;
+        con.SolverParams.shapeCollisionMargin = 0.0625f;
+        con.SolverParams.relaxationMode = NvFlexRelaxationMode.eNvFlexRelaxationLocal;
+        con.SolverParams.relaxationFactor = 1;
+
+        Selection.activeObject = go;
+    }
+#endif
+
 }
