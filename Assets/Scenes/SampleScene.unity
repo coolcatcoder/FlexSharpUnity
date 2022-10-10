@@ -124,6 +124,169 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &31072775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 31072777}
+  - component: {fileID: 31072776}
+  m_Layer: 0
+  m_Name: planet_liquid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &31072776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31072775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: -3214521003866156968, guid: db14924bb11a22049833deabe30735e4, type: 3}
+  Container: {fileID: 1205042146}
+  InverseMass: 1
+  Fluid: 1
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 511805
+--- !u!4 &31072777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31072775}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 360, y: 9.801821, z: 153}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &103518567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 103518569}
+  - component: {fileID: 103518568}
+  m_Layer: 0
+  m_Name: planet_liquid (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &103518568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103518567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: -3214521003866156968, guid: db14924bb11a22049833deabe30735e4, type: 3}
+  Container: {fileID: 1205042146}
+  InverseMass: 1
+  Fluid: 1
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 511805
+--- !u!4 &103518569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103518567}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 360, y: 9.801821, z: 153}
+  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &146025606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 146025608}
+  - component: {fileID: 146025607}
+  m_Layer: 0
+  m_Name: planet_liquid (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &146025607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146025606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  Container: {fileID: 1205042146}
+  InverseMass: 1
+  Fluid: 1
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 14608392
+  - serializedVersion: 2
+    rgba: 13870082
+  - serializedVersion: 2
+    rgba: 11224832
+--- !u!4 &146025608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146025606}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -97, y: 34.54, z: 310}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &193983344
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +526,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &342538473
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -452,6 +621,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &429544491
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -530,6 +705,59 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.99999994, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &465964873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 465964875}
+  - component: {fileID: 465964874}
+  m_Layer: 0
+  m_Name: planet_liquid (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &465964874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465964873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: -3214521003866156968, guid: db14924bb11a22049833deabe30735e4, type: 3}
+  Container: {fileID: 1205042146}
+  InverseMass: 1
+  Fluid: 1
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 511805
+--- !u!4 &465964875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465964873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 360, y: 9.801821, z: 153}
+  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &589655014
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +909,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &589655020
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -882,6 +1116,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &590330737
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -971,6 +1211,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &613085899
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1049,6 +1295,59 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000002, y: 0.99999994, z: 1.0000002}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &792526109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792526111}
+  - component: {fileID: 792526110}
+  m_Layer: 0
+  m_Name: planet_liquid (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &792526110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792526109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: -3214521003866156968, guid: db14924bb11a22049833deabe30735e4, type: 3}
+  Container: {fileID: 1205042146}
+  InverseMass: 1
+  Fluid: 1
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 511805
+--- !u!4 &792526111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792526109}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 360, y: 9.801821, z: 153}
+  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1397,65 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &981356173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 981356175}
+  - component: {fileID: 981356174}
+  m_Layer: 0
+  m_Name: planet_liquid (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &981356174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981356173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: -2432090755550338912, guid: 233f2689b63bcc34aa56a377edba3f51, type: 3}
+  Container: {fileID: 1205042146}
+  InverseMass: 1
+  Fluid: 1
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 578280
+  - serializedVersion: 2
+    rgba: 918227
+  - serializedVersion: 2
+    rgba: 11206776
+  - serializedVersion: 2
+    rgba: 8257707
+--- !u!4 &981356175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981356173}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -448, y: -485, z: -273}
+  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1036192929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,6 +1495,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &1036192931
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1215,6 +1579,124 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000002, y: 0.99999994, z: 1.0000002}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1104212854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1104212856}
+  - component: {fileID: 1104212855}
+  m_Layer: 0
+  m_Name: planet_liquid (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1104212855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104212854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: 289301614986012343, guid: 1ee772a373eccfb4caf626a6870f6ebe, type: 3}
+  Container: {fileID: 1205042146}
+  InverseMass: 1
+  Fluid: 1
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 14215176
+  - serializedVersion: 2
+    rgba: 918227
+  - serializedVersion: 2
+    rgba: 2421720
+  - serializedVersion: 2
+    rgba: 12462835
+--- !u!4 &1104212856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104212854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 685, y: 152, z: -509}
+  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1110184287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1110184289}
+  - component: {fileID: 1110184288}
+  m_Layer: 0
+  m_Name: planet_liquid (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1110184288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110184287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: 289301614986012343, guid: 1ee772a373eccfb4caf626a6870f6ebe, type: 3}
+  Container: {fileID: 1205042146}
+  InverseMass: 1
+  Fluid: 1
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 15206429
+  - serializedVersion: 2
+    rgba: 13828737
+  - serializedVersion: 2
+    rgba: 3411074
+  - serializedVersion: 2
+    rgba: 5180205
+--- !u!4 &1110184289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110184287}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17, y: -712, z: -78}
+  m_LocalScale: {x: 40, y: 40, z: 40}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1143146133
 GameObject:
   m_ObjectHideFlags: 0
@@ -6044,6 +6526,8 @@ MonoBehaviour:
   FluidRenderer: {fileID: 1143146136}
   Render: 1
   BurstRender: 1
+  MinRenderPos: {x: -1000, y: -1000, z: -1000}
+  MaxRenderPos: {x: 1000, y: 1000, z: 1000}
 --- !u!1 &1164514113
 GameObject:
   m_ObjectHideFlags: 0
@@ -6195,6 +6679,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &1164514119
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6525,6 +7015,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!114 &1569541152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6802,6 +7298,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &1689357605
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6891,6 +7393,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &1744446867
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7011,6 +7519,12 @@ MonoBehaviour:
   Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: 0}
+  DetectCollision: 0
+  MethodToRunOnDetectCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  BatchSize: 256
+  debug: 0
 --- !u!23 &1905825068
 MeshRenderer:
   m_ObjectHideFlags: 0

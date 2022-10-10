@@ -1909,6 +1909,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1154165447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1154165449}
+  - component: {fileID: 1154165448}
+  m_Layer: 0
+  m_Name: test particle shape
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1154165448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154165447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036c28f1ba6552240b78699bd09062b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Verts: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  Container: {fileID: 886319215}
+  InverseMass: 1
+  Fluid: 0
+  Rigid: 0
+  CollisionChannel: 16777216
+  Colours:
+  - serializedVersion: 2
+    rgba: 4280303579
+--- !u!4 &1154165449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154165447}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 37.58721, y: 6.9, z: -14.370211}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1215811708
 GameObject:
   m_ObjectHideFlags: 0
@@ -2452,9 +2505,9 @@ MonoBehaviour:
   CollisionMachine: {fileID: 1599316683}
   NewColours:
   - serializedVersion: 2
-    rgba: 11212002
+    rgba: 4289402082
   - serializedVersion: 2
-    rgba: 1368627
+    rgba: 4279558707
 --- !u!114 &1599316683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2891,7 +2944,7 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 4
   m_MeshDistribution: 0
-  m_SortMode: 0
+  m_SortMode: 4
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
@@ -7883,11 +7936,11 @@ MonoBehaviour:
   CollisionMachine: {fileID: 2104778025}
   NewColours:
   - serializedVersion: 2
-    rgba: 1339362
+    rgba: 4279529442
   - serializedVersion: 2
-    rgba: 1350370
+    rgba: 4279540450
   - serializedVersion: 2
-    rgba: 803530
+    rgba: 4278993610
 --- !u!114 &2104778025
 MonoBehaviour:
   m_ObjectHideFlags: 0
