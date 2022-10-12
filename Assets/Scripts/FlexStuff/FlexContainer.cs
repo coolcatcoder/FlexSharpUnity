@@ -78,7 +78,7 @@ public class FlexContainer : MonoBehaviour
     public float Plane7Index3;
     public bool Plane7Wave;
 
-    unsafe NvFlexLibrary* Library;
+    unsafe public NvFlexLibrary* Library;
     NvFlexSolverDesc SolverDesc;
     unsafe NvFlexSolver* Solver;
     public NvFlexParams SolverParams;
@@ -286,6 +286,7 @@ public class FlexContainer : MonoBehaviour
     public Action UnmappingQueue;
     public Action BeforeSolverTickQueue;
     public Action AfterSolverTickQueue;
+    public Action DestroyQueue;
 
     // Start is called before the first frame update
     void Start()
@@ -378,6 +379,8 @@ public class FlexContainer : MonoBehaviour
             PBuf.DestroyVectors();
             SBuf.DestroyVectors();
 
+            DestroyQueue?.Invoke();
+
             Methods.NvFlexDestroySolver(Solver);
             Methods.NvFlexShutdown(Library);
         }
@@ -416,68 +419,68 @@ public class FlexContainer : MonoBehaviour
         }
     }
 
-    void InitWeirdShapes()
-    {
-        unsafe
-        {
-            for (int i = 0; i < Shapes.Length; i++)
-            {
-                switch (Shapes[i].Shape)
-                {
-                    case NvFlexCollisionShapeType.eNvFlexShapeBox:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeCapsule:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeConvexMesh:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeSDF:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeSphere:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
-                        Shapes[i].MeshId = Methods.NvFlexCreateTriangleMesh(Library);
-                        Debug.Log("meshid_success");
+    //void InitWeirdShapes()
+    //{
+    //    unsafe
+    //    {
+    //        for (int i = 0; i < Shapes.Length; i++)
+    //        {
+    //            switch (Shapes[i].Shape)
+    //            {
+    //                case NvFlexCollisionShapeType.eNvFlexShapeBox:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeCapsule:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeConvexMesh:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeSDF:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeSphere:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
+    //                    Shapes[i].MeshId = Methods.NvFlexCreateTriangleMesh(Library);
+    //                    Debug.Log("meshid_success");
 
-                        Shapes[i].Vertices = Methods.NvFlexAllocBuffer(Library, Shapes[i].TriMesh.vertices.Length, sizeof(Vector3), NvFlexBufferType.eNvFlexBufferHost);
-                        Debug.Log("vert_success");
+    //                    Shapes[i].Vertices = Methods.NvFlexAllocBuffer(Library, Shapes[i].TriMesh.vertices.Length, sizeof(Vector3), NvFlexBufferType.eNvFlexBufferHost);
+    //                    Debug.Log("vert_success");
 
-                        Shapes[i].Indices = Methods.NvFlexAllocBuffer(Library, Shapes[i].TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
-                        Debug.Log("indices_success");
+    //                    Shapes[i].Indices = Methods.NvFlexAllocBuffer(Library, Shapes[i].TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
+    //                    Debug.Log("indices_success");
 
-                        break;
-                }
-            }
-        }
-    }
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
 
-    void DestroyWeirdShapes()
-    {
-        unsafe
-        {
-            for (int i = 0; i < Shapes.Length; i++)
-            {
-                switch (Shapes[i].Shape)
-                {
-                    case NvFlexCollisionShapeType.eNvFlexShapeBox:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeCapsule:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeConvexMesh:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeSDF:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeSphere:
-                        break;
-                    case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
-                        Methods.NvFlexDestroyTriangleMesh(Library, Shapes[i].MeshId);
+    //void DestroyWeirdShapes()
+    //{
+    //    unsafe
+    //    {
+    //        for (int i = 0; i < Shapes.Length; i++)
+    //        {
+    //            switch (Shapes[i].Shape)
+    //            {
+    //                case NvFlexCollisionShapeType.eNvFlexShapeBox:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeCapsule:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeConvexMesh:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeSDF:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeSphere:
+    //                    break;
+    //                case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
+    //                    Methods.NvFlexDestroyTriangleMesh(Library, Shapes[i].MeshId);
 
-                        Methods.NvFlexFreeBuffer(Shapes[i].Vertices);
-                        Methods.NvFlexFreeBuffer(Shapes[i].Indices);
-                        break;
-                }
-            }
-        }
-    }
+    //                    Methods.NvFlexFreeBuffer(Shapes[i].Vertices);
+    //                    Methods.NvFlexFreeBuffer(Shapes[i].Indices);
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
 
     void WavePlanes()
     {

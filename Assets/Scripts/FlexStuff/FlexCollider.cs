@@ -49,6 +49,10 @@ public class FlexCollider : MonoBehaviour
     [System.NonSerialized]
     unsafe public NvFlexBuffer* Indices;
 
+    unsafe public Vector3* RWVertices;
+
+    unsafe public int* RWIndices;
+
     int ShapeIndex;
 
     public enum WhenToRun
@@ -76,6 +80,14 @@ public class FlexCollider : MonoBehaviour
         }
 
         Container.InbetweenQueue += DealWithShape;
+
+        if (Shape == NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh)
+        {
+            Container.MappingQueue += InitTri;
+            Container.MappingQueue += MapTri;
+            Container.UnmappingQueue += UnMapTri;
+            Container.DestroyQueue += DestroyTri;
+        }
     }
 
     // Update is called once per frame
@@ -127,50 +139,68 @@ public class FlexCollider : MonoBehaviour
                         Container.SBuf.Geometry.data[ShapeIndex].sphere.radius = transform.lossyScale.x / 2;
                         break;
                     case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
-                        //var RWIndices = (int*)Methods.NvFlexMap(Shapes[i].Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
-                        //var RWVertices = (Vector3*)Methods.NvFlexMap(Shapes[i].Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
+                        for (int i = 0; i < TriMesh.vertices.Length; i++)
+                        {
+                            RWVertices[i] = TriMesh.vertices[i];
+                        }
 
+                        for (int i = 0; i < TriMesh.triangles.Length; i++)
+                        {
+                            RWIndices[i] = TriMesh.triangles[i];
 
-                        //for (int k = 0; k < Shapes[i].TriMesh.vertices.Length; k++)
-                        //{
-                        //    RWVertices[k] = Shapes[i].TriMesh.vertices[k];
-                        //}
+                            Debug.DrawLine(RWVertices[RWIndices[i]], RWVertices[RWIndices[i + 1]], Color.blue, float.PositiveInfinity);
+                        }
 
-                        //for (int k = 0; k < Shapes[i].TriMesh.triangles.Length; k++)
-                        //{
-                        //    RWIndices[k] = Shapes[i].TriMesh.triangles[k];
+                        for (int i = 0; i < TriMesh.triangles.Length; i += 3)
+                        {
+                            Debug.DrawLine(RWVertices[RWIndices[i]], RWVertices[RWIndices[i + 1]], Color.blue, float.PositiveInfinity);
+                            Debug.DrawLine(RWVertices[RWIndices[i + 1]], RWVertices[RWIndices[i + 2]], Color.blue, float.PositiveInfinity);
+                            Debug.DrawLine(RWVertices[RWIndices[i + 2]], RWVertices[RWIndices[i]], Color.blue, float.PositiveInfinity);
+                        }
 
-                        //    Debug.DrawLine(RWVertices[RWIndices[k]], RWVertices[RWIndices[k + 1]], Color.blue, float.PositiveInfinity);
-                        //}
+                        var min = TriMesh.bounds.min * 2;
+                        var LowerBoundsPtr = &min;
 
-                        //for (int k = 0; k < Shapes[i].TriMesh.triangles.Length; k += 3)
-                        //{
-                        //    Debug.DrawLine(RWVertices[RWIndices[k]], RWVertices[RWIndices[k + 1]], Color.blue, float.PositiveInfinity);
-                        //    Debug.DrawLine(RWVertices[RWIndices[k + 1]], RWVertices[RWIndices[k + 2]], Color.blue, float.PositiveInfinity);
-                        //    Debug.DrawLine(RWVertices[RWIndices[k + 2]], RWVertices[RWIndices[k]], Color.blue, float.PositiveInfinity);
-                        //}
+                        var max = TriMesh.bounds.max * 2;
+                        var UpperBoundsPtr = &max;
 
-                        //Methods.NvFlexUnmap(Shapes[i].Indices);
-                        //Methods.NvFlexUnmap(Shapes[i].Vertices);
+                        Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
+                        //Methods.NvFlexUpdateTriangleMesh(library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, null, null);
 
-                        //var min = Shapes[i].TriMesh.bounds.min * 2;
-                        //var LowerBoundsPtr = &min;
-
-                        //var max = Shapes[i].TriMesh.bounds.max * 2;
-                        //var UpperBoundsPtr = &max;
-
-                        //Methods.NvFlexUpdateTriangleMesh(Library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
-                        ////Methods.NvFlexUpdateTriangleMesh(library, Shapes[i].MeshId, Shapes[i].Vertices, Shapes[i].Indices, Shapes[i].TriMesh.vertices.Length, Shapes[i].TriMesh.triangles.Length / 3, null, null);
-
-                        //Container.SBuf.Geometry.data[i].triMesh.mesh = Shapes[i].MeshId;
-                        //Container.SBuf.Geometry.data[i].triMesh.scale[0] = Shapes[i].transform.lossyScale.x;
-                        //Container.SBuf.Geometry.data[i].triMesh.scale[1] = Shapes[i].transform.lossyScale.y;
-                        //Container.SBuf.Geometry.data[i].triMesh.scale[2] = Shapes[i].transform.lossyScale.z;
+                        Container.SBuf.Geometry.data[ShapeIndex].triMesh.mesh = MeshId;
+                        Container.SBuf.Geometry.data[ShapeIndex].triMesh.scale[0] = transform.lossyScale.x;
+                        Container.SBuf.Geometry.data[ShapeIndex].triMesh.scale[1] = transform.lossyScale.y;
+                        Container.SBuf.Geometry.data[ShapeIndex].triMesh.scale[2] = transform.lossyScale.z;
 
                         break;
                 }
             }
         }
+    }
+
+    unsafe void InitTri()
+    {
+        Vertices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.vertexCount, sizeof(Vector3), NvFlexBufferType.eNvFlexBufferHost);
+        Indices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
+    }
+
+    unsafe void MapTri()
+    {
+        RWVertices = (Vector3*)Methods.NvFlexMap(Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
+        RWIndices = (int*)Methods.NvFlexMap(Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
+    }
+
+    unsafe void UnMapTri()
+    {
+        Methods.NvFlexUnmap(Vertices);
+        Methods.NvFlexUnmap(Indices);
+    }
+
+    unsafe void DestroyTri()
+    {
+        Methods.NvFlexDestroyTriangleMesh(Container.Library, MeshId);
+        Methods.NvFlexFreeBuffer(Vertices);
+        Methods.NvFlexFreeBuffer(Indices);
     }
 
     unsafe void DealWithCollisions()

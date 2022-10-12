@@ -2893,6 +2893,7 @@ GameObject:
   - component: {fileID: 1663408939}
   - component: {fileID: 1663408938}
   - component: {fileID: 1663408941}
+  - component: {fileID: 1663408942}
   m_Layer: 3
   m_Name: Fluid Render Test
   m_TagString: Untagged
@@ -7712,6 +7713,30 @@ MonoBehaviour:
   BurstRender: 1
   MinRenderPos: {x: -1000, y: -1000, z: -1000}
   MaxRenderPos: {x: 1000, y: 1000, z: 1000}
+--- !u!114 &1663408942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663408937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94f4945cb3634548a2f6ce17ad24cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParticleMesh: {fileID: 0}
+  SubMeshIndex: 0
+  ParticleMaterial: {fileID: 0}
+  RenderBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  CastShadows: 0
+  ReceiveShadows: 0
+  Layer: 0
+  Cam: {fileID: 0}
+  LightProbeThing: 0
+  Container: {fileID: 0}
 --- !u!1 &1843200557
 GameObject:
   m_ObjectHideFlags: 0
@@ -8074,7 +8099,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!33 &1979672019083397417
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8261,7 +8286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: {fileID: 0}
+  Container: {fileID: 886319215}
   Shape: 4
   PhaseSettings: 16777216
   ShapeMysteryPower: 0
