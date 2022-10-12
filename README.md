@@ -16,3 +16,7 @@ Currently this library is early in development, so far this is what has been don
 
 For the most basic example all you need is a flex container with planes setup for your particles to collide with, and then an emitter to emit fluid particles!
 I would highly recommend downloading the official NvFlex demo app and choosing the solver parameters based off of scenes from there (also check their manual, it is very helpful).
+
+## Screenshots:
+
+![rainbow pond](https://github.com/coolcatcoder/FlexSharpUnity/blob/main/Images(github)/pond_scene_rainbow.png)
