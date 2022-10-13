@@ -1329,8 +1329,8 @@ MonoBehaviour:
     solidRestDistance: 0.25
     fluidRestDistance: 0.25
     dynamicFriction: 0
-    staticFriction: 0
-    particleFriction: 0
+    staticFriction: 0.01
+    particleFriction: 0.01
     restitution: 0
     adhesion: 0
     sleepThreshold: 0
@@ -1361,9 +1361,9 @@ MonoBehaviour:
     diffuseDrag: 0
     diffuseBallistic: 0
     diffuseLifetime: 0
-    collisionDistance: 0.125
-    particleCollisionMargin: 0.0625
-    shapeCollisionMargin: 0.0625
+    collisionDistance: 0.25
+    particleCollisionMargin: 0.0125
+    shapeCollisionMargin: 0.0125
     planes:
     - 0
     - 0
@@ -8093,6 +8093,7 @@ GameObject:
   - component: {fileID: 5996178392539408367}
   - component: {fileID: 7067008026687570811}
   - component: {fileID: 8926586527191735974}
+  - component: {fileID: 8926586527191735975}
   m_Layer: 0
   m_Name: pumpkin_tri
   m_TagString: Untagged
@@ -8267,7 +8268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384974586029215134}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.15, y: -1.68, z: -2.013523}
+  m_LocalPosition: {x: 16.15, y: -1.68, z: 36.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8294,9 +8295,37 @@ MonoBehaviour:
   Trigger: 0
   TriMesh: {fileID: -2432090755550338912, guid: 233f2689b63bcc34aa56a377edba3f51,
     type: 3}
-  DetectCollision: 0
+  DetectCollision: 1
   MethodToRunOnDetectCollision:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8926586527191735975}
+        m_TargetAssemblyTypeName: ParticlePainter, Assembly-CSharp
+        m_MethodName: PaintParticle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   BatchSize: 256
   debug: 0
+--- !u!114 &8926586527191735975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384974586029215134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a32f6aecacaa0a449cac2a9da46396b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionMachine: {fileID: 8926586527191735974}
+  NewColours:
+  - serializedVersion: 2
+    rgba: 4278190080

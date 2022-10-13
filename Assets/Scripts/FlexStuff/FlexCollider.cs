@@ -49,7 +49,7 @@ public class FlexCollider : MonoBehaviour
     [System.NonSerialized]
     unsafe public NvFlexBuffer* Indices;
 
-    unsafe public Vector3* RWVertices;
+    unsafe public Vector4* RWVertices;
 
     unsafe public int* RWIndices;
 
@@ -83,9 +83,9 @@ public class FlexCollider : MonoBehaviour
 
         if (Shape == NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh)
         {
-            Container.MappingQueue += InitTri;
-            Container.MappingQueue += MapTri;
-            Container.UnmappingQueue += UnMapTri;
+            //Container.MappingQueue += InitTri;
+            //Container.MappingQueue += MapTri;
+            //Container.UnmappingQueue += UnMapTri;
             Container.DestroyQueue += DestroyTri;
         }
     }
@@ -139,6 +139,15 @@ public class FlexCollider : MonoBehaviour
                         Container.SBuf.Geometry.data[ShapeIndex].sphere.radius = transform.lossyScale.x / 2;
                         break;
                     case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
+
+                        Vertices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.vertexCount, sizeof(Vector4), NvFlexBufferType.eNvFlexBufferHost);
+                        Indices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
+
+                        MeshId = Methods.NvFlexCreateTriangleMesh(Container.Library);
+
+                        RWVertices = (Vector4*)Methods.NvFlexMap(Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
+                        RWIndices = (int*)Methods.NvFlexMap(Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
+
                         for (int i = 0; i < TriMesh.vertices.Length; i++)
                         {
                             RWVertices[i] = TriMesh.vertices[i];
@@ -148,15 +157,15 @@ public class FlexCollider : MonoBehaviour
                         {
                             RWIndices[i] = TriMesh.triangles[i];
 
-                            Debug.DrawLine(RWVertices[RWIndices[i]], RWVertices[RWIndices[i + 1]], Color.blue, float.PositiveInfinity);
+                            //Debug.DrawLine(RWVertices[RWIndices[i]], RWVertices[RWIndices[i + 1]], Color.blue, float.PositiveInfinity);
                         }
 
-                        for (int i = 0; i < TriMesh.triangles.Length; i += 3)
-                        {
-                            Debug.DrawLine(RWVertices[RWIndices[i]], RWVertices[RWIndices[i + 1]], Color.blue, float.PositiveInfinity);
-                            Debug.DrawLine(RWVertices[RWIndices[i + 1]], RWVertices[RWIndices[i + 2]], Color.blue, float.PositiveInfinity);
-                            Debug.DrawLine(RWVertices[RWIndices[i + 2]], RWVertices[RWIndices[i]], Color.blue, float.PositiveInfinity);
-                        }
+                        //for (int i = 0; i < TriMesh.triangles.Length; i += 3)
+                        //{
+                        //    Debug.DrawLine(RWVertices[RWIndices[i]], RWVertices[RWIndices[i + 1]], Color.blue, float.PositiveInfinity);
+                        //    Debug.DrawLine(RWVertices[RWIndices[i + 1]], RWVertices[RWIndices[i + 2]], Color.blue, float.PositiveInfinity);
+                        //    Debug.DrawLine(RWVertices[RWIndices[i + 2]], RWVertices[RWIndices[i]], Color.blue, float.PositiveInfinity);
+                        //}
 
                         var min = TriMesh.bounds.min * 2;
                         var LowerBoundsPtr = &min;
@@ -164,14 +173,19 @@ public class FlexCollider : MonoBehaviour
                         var max = TriMesh.bounds.max * 2;
                         var UpperBoundsPtr = &max;
 
-                        Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
-                        //Methods.NvFlexUpdateTriangleMesh(library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, null, null);
-
                         Container.SBuf.Geometry.data[ShapeIndex].triMesh.mesh = MeshId;
                         Container.SBuf.Geometry.data[ShapeIndex].triMesh.scale[0] = transform.lossyScale.x;
                         Container.SBuf.Geometry.data[ShapeIndex].triMesh.scale[1] = transform.lossyScale.y;
                         Container.SBuf.Geometry.data[ShapeIndex].triMesh.scale[2] = transform.lossyScale.z;
 
+                        
+
+                        Methods.NvFlexUnmap(Vertices);
+                        Methods.NvFlexUnmap(Indices);
+
+                        //Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, null, null);
+                        Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
+                        
                         break;
                 }
             }
@@ -180,13 +194,18 @@ public class FlexCollider : MonoBehaviour
 
     unsafe void InitTri()
     {
-        Vertices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.vertexCount, sizeof(Vector3), NvFlexBufferType.eNvFlexBufferHost);
+        Container.MappingQueue -= InitTri;
+        Vertices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.vertexCount, sizeof(Vector4), NvFlexBufferType.eNvFlexBufferHost);
         Indices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
+
+        MeshId = Methods.NvFlexCreateTriangleMesh(Container.Library);
+
+        Debug.Log("attempting to create a tri mesh");
     }
 
     unsafe void MapTri()
     {
-        RWVertices = (Vector3*)Methods.NvFlexMap(Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
+        RWVertices = (Vector4*)Methods.NvFlexMap(Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
         RWIndices = (int*)Methods.NvFlexMap(Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
     }
 
@@ -194,6 +213,12 @@ public class FlexCollider : MonoBehaviour
     {
         Methods.NvFlexUnmap(Vertices);
         Methods.NvFlexUnmap(Indices);
+
+        if (transform.hasChanged)
+        {
+            Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, null, null);
+            transform.hasChanged = false;
+        }
     }
 
     unsafe void DestroyTri()
