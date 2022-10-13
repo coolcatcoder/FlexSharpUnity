@@ -8100,7 +8100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!33 &1979672019083397417
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8268,7 +8268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384974586029215134}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.15, y: -1.68, z: 36.97}
+  m_LocalPosition: {x: 20.97, y: -0.59, z: 4.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8291,26 +8291,14 @@ MonoBehaviour:
   Shape: 4
   PhaseSettings: 16777216
   ShapeMysteryPower: 0
-  Dynamic: 0
+  Dynamic: 1
   Trigger: 0
   TriMesh: {fileID: -2432090755550338912, guid: 233f2689b63bcc34aa56a377edba3f51,
     type: 3}
-  DetectCollision: 1
+  DetectCollision: 0
   MethodToRunOnDetectCollision:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8926586527191735975}
-        m_TargetAssemblyTypeName: ParticlePainter, Assembly-CSharp
-        m_MethodName: PaintParticle
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   BatchSize: 256
   debug: 0
 --- !u!114 &8926586527191735975

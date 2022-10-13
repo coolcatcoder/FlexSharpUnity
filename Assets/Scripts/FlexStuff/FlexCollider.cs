@@ -83,7 +83,7 @@ public class FlexCollider : MonoBehaviour
 
         if (Shape == NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh)
         {
-            //Container.MappingQueue += InitTri;
+            Container.MappingQueue += InitTri;
             //Container.MappingQueue += MapTri;
             //Container.UnmappingQueue += UnMapTri;
             Container.DestroyQueue += DestroyTri;
@@ -140,25 +140,40 @@ public class FlexCollider : MonoBehaviour
                         break;
                     case NvFlexCollisionShapeType.eNvFlexShapeTriangleMesh:
 
-                        Vertices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.vertexCount, sizeof(Vector4), NvFlexBufferType.eNvFlexBufferHost);
-                        Indices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
+                        //Vertices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.vertexCount, sizeof(Vector4), NvFlexBufferType.eNvFlexBufferHost);
+                        //Indices = Methods.NvFlexAllocBuffer(Container.Library, TriMesh.triangles.Length, sizeof(int), NvFlexBufferType.eNvFlexBufferHost);
 
-                        MeshId = Methods.NvFlexCreateTriangleMesh(Container.Library);
+                        //MeshId = Methods.NvFlexCreateTriangleMesh(Container.Library);
 
                         RWVertices = (Vector4*)Methods.NvFlexMap(Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
                         RWIndices = (int*)Methods.NvFlexMap(Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
 
-                        for (int i = 0; i < TriMesh.vertices.Length; i++)
+                        //for (int i = 0; i < TriMesh.vertices.Length; i++)
+                        //{
+                        //RWVertices[i] = TriMesh.vertices[i];
+                        //}
+
+                        VertsLooping VertJob = new VertsLooping();
+                        VertJob.RWVerts = RWVertices;
+
+                        NativeArray<Vector3> Verts;
+
+                        using (var dataArray = Mesh.AcquireReadOnlyMeshData(TriMesh))
                         {
-                            RWVertices[i] = TriMesh.vertices[i];
+                            var data = dataArray[0];
+                            Verts = new NativeArray<Vector3>(TriMesh.vertexCount, Allocator.TempJob);
+                            data.GetVertices(Verts);
+                            VertJob.Verts = Verts;
                         }
 
-                        for (int i = 0; i < TriMesh.triangles.Length; i++)
-                        {
-                            RWIndices[i] = TriMesh.triangles[i];
+                        JobHandle VertHandle = VertJob.Schedule(TriMesh.vertices.Length, BatchSize);
 
-                            //Debug.DrawLine(RWVertices[RWIndices[i]], RWVertices[RWIndices[i + 1]], Color.blue, float.PositiveInfinity);
-                        }
+                        //for (int i = 0; i < TriMesh.triangles.Length; i++)
+                        //{
+                        //RWIndices[i] = TriMesh.triangles[i];
+
+                        //Debug.DrawLine(RWVertices[RWIndices[i]], RWVertices[RWIndices[i + 1]], Color.blue, float.PositiveInfinity);
+                        //}
 
                         //for (int i = 0; i < TriMesh.triangles.Length; i += 3)
                         //{
@@ -167,10 +182,25 @@ public class FlexCollider : MonoBehaviour
                         //    Debug.DrawLine(RWVertices[RWIndices[i + 2]], RWVertices[RWIndices[i]], Color.blue, float.PositiveInfinity);
                         //}
 
-                        var min = TriMesh.bounds.min * 2;
+                        IndisLooping IndiJob = new IndisLooping();
+                        IndiJob.RWIndis = RWIndices;
+
+                        NativeArray<int> Indis;
+
+                        using (var dataArray = Mesh.AcquireReadOnlyMeshData(TriMesh))
+                        {
+                            var data = dataArray[0];
+                            Indis = new NativeArray<int>(TriMesh.triangles.Length, Allocator.TempJob);
+                            data.GetIndices(Indis, 0);
+                            IndiJob.Indis = Indis;
+                        }
+
+                        JobHandle IndiHandle = IndiJob.Schedule(TriMesh.triangles.Length, BatchSize);
+
+                        var min = TriMesh.bounds.min;
                         var LowerBoundsPtr = &min;
 
-                        var max = TriMesh.bounds.max * 2;
+                        var max = TriMesh.bounds.max;
                         var UpperBoundsPtr = &max;
 
                         Container.SBuf.Geometry.data[ShapeIndex].triMesh.mesh = MeshId;
@@ -182,6 +212,12 @@ public class FlexCollider : MonoBehaviour
 
                         Methods.NvFlexUnmap(Vertices);
                         Methods.NvFlexUnmap(Indices);
+
+                        VertHandle.Complete();
+                        IndiHandle.Complete();
+
+                        Verts.Dispose();
+                        Indis.Dispose();
 
                         //Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, null, null);
                         Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, (float*)LowerBoundsPtr, (float*)UpperBoundsPtr);
@@ -203,29 +239,61 @@ public class FlexCollider : MonoBehaviour
         Debug.Log("attempting to create a tri mesh");
     }
 
-    unsafe void MapTri()
-    {
-        RWVertices = (Vector4*)Methods.NvFlexMap(Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
-        RWIndices = (int*)Methods.NvFlexMap(Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
-    }
+    //unsafe void MapTri()
+    //{
+    //    RWVertices = (Vector4*)Methods.NvFlexMap(Vertices, (int)NvFlexMapFlags.eNvFlexMapWait);
+    //    RWIndices = (int*)Methods.NvFlexMap(Indices, (int)NvFlexMapFlags.eNvFlexMapWait);
+    //}
 
-    unsafe void UnMapTri()
-    {
-        Methods.NvFlexUnmap(Vertices);
-        Methods.NvFlexUnmap(Indices);
+    //unsafe void UnMapTri()
+    //{
+    //    Methods.NvFlexUnmap(Vertices);
+    //    Methods.NvFlexUnmap(Indices);
 
-        if (transform.hasChanged)
-        {
-            Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, null, null);
-            transform.hasChanged = false;
-        }
-    }
+    //    if (transform.hasChanged)
+    //    {
+    //        Methods.NvFlexUpdateTriangleMesh(Container.Library, MeshId, Vertices, Indices, TriMesh.vertices.Length, TriMesh.triangles.Length / 3, null, null);
+    //        transform.hasChanged = false;
+    //    }
+    //}
 
     unsafe void DestroyTri()
     {
         Methods.NvFlexDestroyTriangleMesh(Container.Library, MeshId);
         Methods.NvFlexFreeBuffer(Vertices);
         Methods.NvFlexFreeBuffer(Indices);
+    }
+
+    [BurstCompile]
+    public unsafe struct VertsLooping : IJobParallelFor
+    {
+        [WriteOnly]
+        [NativeDisableUnsafePtrRestriction]
+        public Vector4* RWVerts;
+
+        [ReadOnly]
+        public NativeArray<Vector3> Verts;
+
+        public void Execute(int i)
+        {
+            RWVerts[i] = Verts[i];
+        }
+    }
+
+    [BurstCompile]
+    public unsafe struct IndisLooping : IJobParallelFor
+    {
+        [WriteOnly]
+        [NativeDisableUnsafePtrRestriction]
+        public int* RWIndis;
+
+        [ReadOnly]
+        public NativeArray<int> Indis;
+
+        public void Execute(int i)
+        {
+            RWIndis[i] = Indis[i];
+        }
     }
 
     unsafe void DealWithCollisions()
