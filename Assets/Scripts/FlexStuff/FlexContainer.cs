@@ -194,6 +194,8 @@ public class FlexContainer : MonoBehaviour
         public FVector<NvFlexCollisionGeometry> Geometry;
         public FVector<Vector4> Positions;
         public FVector<XQuat<float>> Rotations;
+        public FVector<Vector4> PrevPositions;
+        public FVector<XQuat<float>> PrevRotations;
         public FVector<int> Flags;
 
         public FVector<Vector4> ContactPlanes;
@@ -209,6 +211,8 @@ public class FlexContainer : MonoBehaviour
             Geometry.InitVec();
             Positions.InitVec();
             Rotations.InitVec();
+            PrevPositions.InitVec();
+            PrevRotations.InitVec();
             Flags.InitVec();
 
             ContactPlanes.InitVec();
@@ -222,6 +226,8 @@ public class FlexContainer : MonoBehaviour
             Geometry.MapVec();
             Positions.MapVec();
             Rotations.MapVec();
+            PrevPositions.MapVec();
+            PrevRotations.MapVec();
             Flags.MapVec();
 
             ContactPlanes.MapVec();
@@ -235,6 +241,8 @@ public class FlexContainer : MonoBehaviour
             Geometry.UnmapVec();
             Positions.UnmapVec();
             Rotations.UnmapVec();
+            PrevPositions.UnmapVec();
+            PrevRotations.UnmapVec();
             Flags.UnmapVec();
 
             ContactPlanes.UnmapVec();
@@ -247,7 +255,7 @@ public class FlexContainer : MonoBehaviour
         {
             if (ShapesChanged)
             {
-                Methods.NvFlexSetShapes(Solver, Geometry.buffer, Positions.buffer, Rotations.buffer, null, null, Flags.buffer, NumShapes);
+                Methods.NvFlexSetShapes(Solver, Geometry.buffer, Positions.buffer, Rotations.buffer, PrevPositions.buffer, PrevRotations.buffer, Flags.buffer, NumShapes);
             }
             
         }
@@ -263,6 +271,8 @@ public class FlexContainer : MonoBehaviour
             Geometry.Destroy();
             Positions.Destroy();
             Rotations.Destroy();
+            PrevPositions.Destroy();
+            PrevRotations.Destroy();
             Flags.Destroy();
 
             ContactPlanes.Destroy();
@@ -327,6 +337,8 @@ public class FlexContainer : MonoBehaviour
                 SBuf.Geometry = new FVector<NvFlexCollisionGeometry>(Library, SBuf.NumShapes);
                 SBuf.Positions = new FVector<Vector4>(Library, SBuf.NumShapes);
                 SBuf.Rotations = new FVector<XQuat<float>>(Library, SBuf.NumShapes);
+                SBuf.PrevPositions = new FVector<Vector4>(Library, SBuf.NumShapes);
+                SBuf.PrevRotations = new FVector<XQuat<float>>(Library, SBuf.NumShapes);
                 SBuf.Flags = new FVector<int>(Library, SBuf.NumShapes);
 
                 SBuf.ContactPlanes = new FVector<Vector4>(Library, MaxParticles * 6); // 6 appears to be the max amount of contacts a particle is allowed to have according to triggervolume.h in the demo app

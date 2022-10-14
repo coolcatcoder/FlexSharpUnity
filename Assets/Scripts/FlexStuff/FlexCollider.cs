@@ -14,6 +14,13 @@ public class ParticleIdEvent : UnityEvent<int>
 
 }
 
+[System.Serializable]
+public class ParticleIdListEvent : UnityEvent<NativeList<int>>
+{
+
+}
+
+
 public class FlexCollider : MonoBehaviour
 {
     public FlexContainer Container;
@@ -31,6 +38,7 @@ public class FlexCollider : MonoBehaviour
     public bool DetectCollision;
 
     public ParticleIdEvent MethodToRunOnDetectCollision;
+    public ParticleIdListEvent MethodToRunOnDetectCollisionSentWithList;
 
     //public WhenToRun WhenToRunMethodOnCollision; //I hate this name, please someone figure out a better naming scheme for everything in this file just so that this variable can have a better name, please!
 
@@ -115,6 +123,10 @@ public class FlexCollider : MonoBehaviour
                 rotation.x = transform.rotation.x;
                 rotation.y = transform.rotation.y;
                 rotation.z = transform.rotation.z;
+
+                Container.SBuf.PrevPositions.data[ShapeIndex] = Container.SBuf.Positions.data[ShapeIndex];
+                Container.SBuf.PrevRotations.data[ShapeIndex] = Container.SBuf.Rotations.data[ShapeIndex];
+
                 Container.SBuf.Rotations.data[ShapeIndex] = rotation;
 
                 Container.SBuf.Positions.data[ShapeIndex] = new Vector4(transform.position.x, transform.position.y, transform.position.z, ShapeMysteryPower);
@@ -422,10 +434,15 @@ public class FlexCollider : MonoBehaviour
         JobHandle handle = CollisionsJobData.Schedule(Container.SlotsUsed, BatchSize);
         handle.Complete();
 
-        foreach (int PI in ParticleIds)
+        if (MethodToRunOnDetectCollision != null)
         {
-            MethodToRunOnDetectCollision?.Invoke(PI);
+            foreach (int PI in ParticleIds)
+            {
+                MethodToRunOnDetectCollision?.Invoke(PI);
+            }
         }
+
+        MethodToRunOnDetectCollisionSentWithList?.Invoke(ParticleIds);
 
         if (debug)
         {
