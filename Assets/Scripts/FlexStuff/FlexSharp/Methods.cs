@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Unity.Collections.LowLevel.Unsafe;
 using static FlexSharp.NvFlexCollisionShapeFlags;
 using static FlexSharp.NvFlexPhase;
 
@@ -6,6 +7,14 @@ namespace FlexSharp
 {
     public static unsafe partial class Methods
     {
+        public static unsafe void ConvertArray<T>(T[] FromArray, T* ToArray, int Stride, int Length) where T : unmanaged
+        {
+            fixed (void* FromArrayPtr = FromArray)
+            {
+                UnsafeUtility.MemCpy((void*)ToArray, FromArrayPtr, Stride*Length);
+            }
+        }
+
         public static int NvFlexMakePhaseWithChannels(int group, int particleFlags, int shapeChannels)
         {
             return (group & (int)(eNvFlexPhaseGroupMask)) | (particleFlags & (int)(eNvFlexPhaseFlagsMask)) | (shapeChannels & (int)(eNvFlexPhaseShapeChannelMask));
