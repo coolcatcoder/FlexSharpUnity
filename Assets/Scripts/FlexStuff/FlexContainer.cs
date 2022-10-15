@@ -298,6 +298,8 @@ public class FlexContainer : MonoBehaviour
     public Action AfterSolverTickQueue;
     public Action DestroyQueue;
 
+    bool FixedDone = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -326,6 +328,13 @@ public class FlexContainer : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!FixedDone)
+        {
+            Debug.Log("Warning, fixed updates are colliding!");
+        }
+
+        FixedDone = false;
+
         unsafe
         {
             if (FirstTime && (SBuf.NumShapes!=0))
@@ -380,6 +389,8 @@ public class FlexContainer : MonoBehaviour
             PBuf.GetBuffers();
             SBuf.GetBuffers();
         }
+
+        FixedDone = true;
     }
 
     void OnDisable()
