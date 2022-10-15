@@ -20,12 +20,15 @@ public class NothingYet : MonoBehaviour
         
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(transform.position, Size);
     }
+#endif
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(NothingYet))]
 public class FlexTriggerEditor : Editor
 {
@@ -37,3 +40,4 @@ public class FlexTriggerEditor : Editor
         LinkedObject.Size = Handles.ScaleHandle(LinkedObject.Size, LinkedObject.transform.position, LinkedObject.transform.rotation, HandleUtility.GetHandleSize(LinkedObject.transform.position)*1.5f);
     }
 }
+#endif
