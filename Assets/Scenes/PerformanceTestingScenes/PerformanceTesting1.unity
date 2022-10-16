@@ -8366,7 +8366,7 @@ MonoBehaviour:
   Container: {fileID: 1205042146}
   ParticlesPerTime: 65
   SecondsBetween: 0.1
-  SecondsTillStop: 10
+  SecondsTillStop: Infinity
   emit: 0
   VelocityX: 0
   VelocityY: -20

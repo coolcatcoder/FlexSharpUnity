@@ -124,8 +124,18 @@ public class FlexCollider : MonoBehaviour
                 rotation.y = transform.rotation.y;
                 rotation.z = transform.rotation.z;
 
-                Container.SBuf.PrevPositions.data[ShapeIndex] = Container.SBuf.Positions.data[ShapeIndex];
-                Container.SBuf.PrevRotations.data[ShapeIndex] = Container.SBuf.Rotations.data[ShapeIndex];
+                if (Container.SBuf.Positions.data[ShapeIndex] != new Vector4())
+                {
+                    Container.SBuf.PrevPositions.data[ShapeIndex] = Container.SBuf.Positions.data[ShapeIndex];
+                    Container.SBuf.PrevRotations.data[ShapeIndex] = Container.SBuf.Rotations.data[ShapeIndex];
+                }
+                else
+                {
+                    Debug.Log("Fixing weirdness!");
+
+                    Container.SBuf.PrevRotations.data[ShapeIndex] = rotation;
+                    Container.SBuf.PrevPositions.data[ShapeIndex] = new Vector4(transform.position.x, transform.position.y, transform.position.z, ShapeMysteryPower);
+                }
 
                 Container.SBuf.Rotations.data[ShapeIndex] = rotation;
 
