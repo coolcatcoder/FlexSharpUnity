@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    public bool FreezeZ = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,18 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(Vector3.up * ViewerX);
         transform.Rotate(Vector3.left * ViewerY);
 
+        if (FreezeZ)
+        {
+            var ZRot = transform.eulerAngles;
+            ZRot.z = 0;
+            transform.eulerAngles = ZRot;
+        }
+
         rb.AddRelativeForce(new Vector3(MoveX, 0, MoveZ));
+
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
     }
 }
