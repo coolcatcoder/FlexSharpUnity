@@ -19,6 +19,8 @@ public class FlexContainer : MonoBehaviour
     public int MaxDiffuseParticles = 0;
     [System.NonSerialized]
     public Color32[] ParticleColours;
+    [System.NonSerialized]
+    public int[] ExtraData;
     public float RParticleRadius = 0.15f;
     public int Substeps = 1;
 
@@ -87,7 +89,7 @@ public class FlexContainer : MonoBehaviour
     public int CurrentSlot;
 
     //bool ShapesChanged = true;
-    FlexCollider[] Shapes;
+    //FlexCollider[] Shapes;
 
     bool FirstTime = true;
 
@@ -303,6 +305,7 @@ public class FlexContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ExtraData = new int[MaxParticles];
         unsafe
         {
             Library = Methods.NvFlexInit();

@@ -5,6 +5,11 @@ namespace FlexSharpExt
 {
     public static unsafe partial class Methods
     {
+        public static bool HasFlag(ExtDat a, ExtDat b)
+        {
+            return (a & b) == b;
+        }
+
         [DllImport("NvFlexExtReleaseD3D_x64.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void NvFlexExtMovingFrameInit(NvFlexExtMovingFrame* frame, [NativeTypeName("const float *")] float* worldTranslation, [NativeTypeName("const float *")] float* worldRotation);
 

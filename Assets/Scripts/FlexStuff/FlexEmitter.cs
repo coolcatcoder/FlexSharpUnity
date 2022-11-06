@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FlexSharp;
+using FlexSharpExt;
 using Unity.Burst;
+using Methods = FlexSharp.Methods;
+using ExtMethods = FlexSharpExt.Methods;
 
 public class FlexEmitter : MonoBehaviour
 {
@@ -19,6 +22,8 @@ public class FlexEmitter : MonoBehaviour
     public Color32[] Colours;
     public bool debug = false;
     public bool Burst;
+    public ExtDat ExtraData;
+    //public ExtDatApplyType WayToApplyExtraData;
 
     float SecondsUntilNext = 0;
 
@@ -74,6 +79,7 @@ public class FlexEmitter : MonoBehaviour
                 Container.PBuf.Velocities.data[Container.CurrentSlot] = new Vector3(VelocityX, VelocityY, VelocityZ);
                 Container.PBuf.Phases.data[Container.CurrentSlot] = Methods.NvFlexMakePhaseWithChannels(0, (int)NvFlexPhase.eNvFlexPhaseSelfCollide | (int)NvFlexPhase.eNvFlexPhaseFluid, (int)NvFlexPhase.eNvFlexPhaseShapeChannel0);
                 Container.ParticleColours[Container.CurrentSlot] = Colours[Random.Range(0,Colours.Length)];
+                Container.ExtraData[Container.CurrentSlot] = (int)ExtraData;
 
                 Container.SlotsUsed++;
                 Mathf.Clamp(Container.SlotsUsed, 0, Container.MaxParticles);
