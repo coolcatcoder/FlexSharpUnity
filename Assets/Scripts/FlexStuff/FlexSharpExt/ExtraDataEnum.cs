@@ -4,7 +4,7 @@ namespace FlexSharpExt
     public enum ExtDat
     {
         None = 0,
-        Fun1 = 1,
+        Dangerous = 1,
         Fun2 = 2,
         Fun3 = 4
     }
