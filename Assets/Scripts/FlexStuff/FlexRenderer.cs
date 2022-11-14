@@ -33,7 +33,7 @@ public class FlexRenderer : MonoBehaviour
         var FluidRendererMain = FluidRenderer.main;
         FluidRendererMain.maxParticles = Container.MaxParticles;
 
-        Container.ParticleColours = new Color32[Container.MaxParticles];
+        //Container.ParticleColours = new Color32[Container.MaxParticles];
 
         if (BurstRender)
         {

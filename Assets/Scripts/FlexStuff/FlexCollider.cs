@@ -48,6 +48,8 @@ public class FlexCollider : MonoBehaviour
 
     public bool debug;
 
+    //public bool SendWhenNull = false;
+
     [System.NonSerialized]
     public uint MeshId;
 

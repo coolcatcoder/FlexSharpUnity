@@ -306,6 +306,7 @@ public class FlexContainer : MonoBehaviour
     void Start()
     {
         ExtraData = new int[MaxParticles];
+        ParticleColours = new Color32[MaxParticles];
         unsafe
         {
             Library = Methods.NvFlexInit();

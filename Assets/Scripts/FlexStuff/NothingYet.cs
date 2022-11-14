@@ -7,6 +7,7 @@ public class NothingYet : MonoBehaviour
 {
     public Vector3 Size;
     public FlexContainer Container;
+    public bool WireSphere = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,14 @@ public class NothingYet : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireCube(transform.position, Size);
+        if (WireSphere)
+        {
+            Gizmos.DrawWireSphere(transform.position, Size.x);
+        }
+        else
+        {
+            Gizmos.DrawWireCube(transform.position, Size);
+        }
     }
 #endif
 }
