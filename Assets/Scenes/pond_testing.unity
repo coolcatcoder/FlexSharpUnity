@@ -764,94 +764,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &262604756
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 262604757}
-  - component: {fileID: 262604759}
-  - component: {fileID: 262604758}
-  m_Layer: 0
-  m_Name: C5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &262604757
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262604756}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0.5, z: -0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 644154720}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &262604758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262604756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.25, y: 0, z: 0}
-  Container: {fileID: 0}
-  WireSphere: 1
---- !u!114 &262604759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262604756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Container: {fileID: 886319215}
-  Shape: 0
-  PhaseSettings: 16777216
-  ShapeMysteryPower: 0
-  Dynamic: 0
-  Trigger: 1
-  TriMesh: {fileID: 0}
-  DetectCollision: 1
-  MethodToRunOnDetectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  MethodToRunOnDetectCollisionSentWithList:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 644154719}
-        m_TargetAssemblyTypeName: IsoSurfaceExtractor, Assembly-CSharp
-        m_MethodName: StealEmptiness5
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BatchSize: 256
-  debug: 0
 --- !u!1 &281666912
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,94 +890,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &616592559
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 616592560}
-  - component: {fileID: 616592562}
-  - component: {fileID: 616592561}
-  m_Layer: 0
-  m_Name: C8
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &616592560
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616592559}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0.5, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 644154720}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &616592561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616592559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.25, y: 0, z: 0}
-  Container: {fileID: 0}
-  WireSphere: 1
---- !u!114 &616592562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616592559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Container: {fileID: 886319215}
-  Shape: 0
-  PhaseSettings: 16777216
-  ShapeMysteryPower: 0
-  Dynamic: 0
-  Trigger: 1
-  TriMesh: {fileID: 0}
-  DetectCollision: 1
-  MethodToRunOnDetectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  MethodToRunOnDetectCollisionSentWithList:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 644154719}
-        m_TargetAssemblyTypeName: IsoSurfaceExtractor, Assembly-CSharp
-        m_MethodName: StealEmptiness8
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BatchSize: 256
-  debug: 0
 --- !u!1 &644154718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,7 +900,6 @@ GameObject:
   m_Component:
   - component: {fileID: 644154720}
   - component: {fileID: 644154719}
-  - component: {fileID: 644154721}
   - component: {fileID: 644154723}
   - component: {fileID: 644154722}
   m_Layer: 0
@@ -1099,7 +922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CubeHalfSize: 0.5
-  DistanceToCount: 0.3
+  DistanceToCount: 0.5
   IsoSurfaceLevel: 0
   DebugCubeIndex: 0
   CubeIndexBatchSize: 256
@@ -1130,6 +953,47 @@ MonoBehaviour:
       y: -2.25
       z: -2
     CubeIndex: 0
+  - Vert0: 0
+    Vert1: 0
+    Vert2: 0
+    Vert3: 0
+    Vert4: 0
+    Vert5: 0
+    Vert6: 0
+    Vert7: 0
+    Pos:
+      x: 13.5
+      y: -2.25
+      z: -2
+    CubeIndex: 0
+  - Vert0: 0
+    Vert1: 0
+    Vert2: 0
+    Vert3: 0
+    Vert4: 0
+    Vert5: 0
+    Vert6: 0
+    Vert7: 0
+    Pos:
+      x: 14
+      y: -2.25
+      z: -2
+    CubeIndex: 0
+  - Vert0: 0
+    Vert1: 0
+    Vert2: 0
+    Vert3: 0
+    Vert4: 0
+    Vert5: 0
+    Vert6: 0
+    Vert7: 0
+    Pos:
+      x: 14.5
+      y: -2.25
+      z: -2
+    CubeIndex: 0
+  debug: 0
+  ChaosMultiplier: 0.5
   MeshRenderer: {fileID: 644154722}
 --- !u!4 &644154720
 Transform:
@@ -1139,36 +1003,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644154718}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13, y: -2.25, z: -2}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 744018085}
-  - {fileID: 697319532}
-  - {fileID: 1206474012}
-  - {fileID: 983415903}
-  - {fileID: 262604757}
-  - {fileID: 1418186608}
-  - {fileID: 1338117183}
-  - {fileID: 616592560}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &644154721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 644154718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.5, y: 0.5, z: 0.5}
-  Container: {fileID: 0}
-  WireSphere: 0
 --- !u!33 &644154722
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1345,94 +1186,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 26.952, y: 0, z: 0}
---- !u!1 &697319531
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 697319532}
-  - component: {fileID: 697319534}
-  - component: {fileID: 697319533}
-  m_Layer: 0
-  m_Name: C2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &697319532
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697319531}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.5, z: -0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 644154720}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &697319533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697319531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.25, y: 0, z: 0}
-  Container: {fileID: 0}
-  WireSphere: 1
---- !u!114 &697319534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697319531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Container: {fileID: 886319215}
-  Shape: 0
-  PhaseSettings: 16777216
-  ShapeMysteryPower: 0
-  Dynamic: 0
-  Trigger: 1
-  TriMesh: {fileID: 0}
-  DetectCollision: 1
-  MethodToRunOnDetectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  MethodToRunOnDetectCollisionSentWithList:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 644154719}
-        m_TargetAssemblyTypeName: IsoSurfaceExtractor, Assembly-CSharp
-        m_MethodName: StealEmptiness2
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BatchSize: 256
-  debug: 0
 --- !u!1 &718258833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1559,94 +1312,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &744018084
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 744018085}
-  - component: {fileID: 744018086}
-  - component: {fileID: 744018087}
-  m_Layer: 0
-  m_Name: C1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &744018085
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744018084}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -0.5, z: -0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 644154720}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &744018086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744018084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Container: {fileID: 886319215}
-  Shape: 0
-  PhaseSettings: 16777216
-  ShapeMysteryPower: 0
-  Dynamic: 0
-  Trigger: 1
-  TriMesh: {fileID: 0}
-  DetectCollision: 1
-  MethodToRunOnDetectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  MethodToRunOnDetectCollisionSentWithList:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 644154719}
-        m_TargetAssemblyTypeName: IsoSurfaceExtractor, Assembly-CSharp
-        m_MethodName: StealEmptiness1
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BatchSize: 256
-  debug: 0
---- !u!114 &744018087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744018084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.25, y: 0, z: 0}
-  Container: {fileID: 0}
-  WireSphere: 1
 --- !u!1 &802354771
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,94 +1861,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: -26.952, y: 0, z: 0}
---- !u!1 &983415902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 983415903}
-  - component: {fileID: 983415905}
-  - component: {fileID: 983415904}
-  m_Layer: 0
-  m_Name: C4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &983415903
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983415902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -0.5, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 644154720}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &983415904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983415902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.25, y: 0, z: 0}
-  Container: {fileID: 0}
-  WireSphere: 1
---- !u!114 &983415905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983415902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Container: {fileID: 886319215}
-  Shape: 0
-  PhaseSettings: 16777216
-  ShapeMysteryPower: 0
-  Dynamic: 0
-  Trigger: 1
-  TriMesh: {fileID: 0}
-  DetectCollision: 1
-  MethodToRunOnDetectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  MethodToRunOnDetectCollisionSentWithList:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 644154719}
-        m_TargetAssemblyTypeName: IsoSurfaceExtractor, Assembly-CSharp
-        m_MethodName: StealEmptiness4
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BatchSize: 256
-  debug: 0
 --- !u!1 &993156948
 GameObject:
   m_ObjectHideFlags: 0
@@ -2589,94 +2166,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1206474011
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1206474012}
-  - component: {fileID: 1206474014}
-  - component: {fileID: 1206474013}
-  m_Layer: 0
-  m_Name: C3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1206474012
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206474011}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.5, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 644154720}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1206474013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206474011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.25, y: 0, z: 0}
-  Container: {fileID: 0}
-  WireSphere: 1
---- !u!114 &1206474014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206474011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Container: {fileID: 886319215}
-  Shape: 0
-  PhaseSettings: 16777216
-  ShapeMysteryPower: 0
-  Dynamic: 0
-  Trigger: 1
-  TriMesh: {fileID: 0}
-  DetectCollision: 1
-  MethodToRunOnDetectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  MethodToRunOnDetectCollisionSentWithList:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 644154719}
-        m_TargetAssemblyTypeName: IsoSurfaceExtractor, Assembly-CSharp
-        m_MethodName: StealEmptiness3
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BatchSize: 256
-  debug: 0
 --- !u!1 &1215811708
 GameObject:
   m_ObjectHideFlags: 0
@@ -3055,182 +2544,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 26.952, y: 90, z: 0}
---- !u!1 &1338117182
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1338117183}
-  - component: {fileID: 1338117185}
-  - component: {fileID: 1338117184}
-  m_Layer: 0
-  m_Name: C7
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1338117183
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1338117182}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 644154720}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1338117184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1338117182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.25, y: 0, z: 0}
-  Container: {fileID: 0}
-  WireSphere: 1
---- !u!114 &1338117185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1338117182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Container: {fileID: 886319215}
-  Shape: 0
-  PhaseSettings: 16777216
-  ShapeMysteryPower: 0
-  Dynamic: 0
-  Trigger: 1
-  TriMesh: {fileID: 0}
-  DetectCollision: 1
-  MethodToRunOnDetectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  MethodToRunOnDetectCollisionSentWithList:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 644154719}
-        m_TargetAssemblyTypeName: IsoSurfaceExtractor, Assembly-CSharp
-        m_MethodName: StealEmptiness7
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BatchSize: 256
-  debug: 0
---- !u!1 &1418186607
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1418186608}
-  - component: {fileID: 1418186610}
-  - component: {fileID: 1418186609}
-  m_Layer: 0
-  m_Name: C6
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1418186608
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418186607}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: -0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 644154720}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1418186609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418186607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed77338a0b9bfaa48af69d01c575a698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Size: {x: 0.25, y: 0, z: 0}
-  Container: {fileID: 0}
-  WireSphere: 1
---- !u!114 &1418186610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418186607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4bb6bc986a79347b8056a254dfdf89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Container: {fileID: 886319215}
-  Shape: 0
-  PhaseSettings: 16777216
-  ShapeMysteryPower: 0
-  Dynamic: 0
-  Trigger: 1
-  TriMesh: {fileID: 0}
-  DetectCollision: 1
-  MethodToRunOnDetectCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  MethodToRunOnDetectCollisionSentWithList:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 644154719}
-        m_TargetAssemblyTypeName: IsoSurfaceExtractor, Assembly-CSharp
-        m_MethodName: StealEmptiness6
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  BatchSize: 256
-  debug: 0
 --- !u!1 &1508918242
 GameObject:
   m_ObjectHideFlags: 0
