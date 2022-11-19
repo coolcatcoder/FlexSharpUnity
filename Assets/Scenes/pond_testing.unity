@@ -922,7 +922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CubeHalfSize: 0.5
-  DistanceToCount: 0.5
+  DistanceToCount: 0.25
   IsoSurfaceLevel: 0
   DebugCubeIndex: 0
   CubeIndexBatchSize: 256
@@ -940,60 +940,21 @@ MonoBehaviour:
   ChaosOffSet: 0
   Experimental: 0
   Cells:
-  - Vert0: 0
-    Vert1: 0
-    Vert2: 0
-    Vert3: 0
-    Vert4: 0
-    Vert5: 0
-    Vert6: 0
-    Vert7: 0
-    Pos:
+  - Pos:
       x: 13
       y: -2.25
       z: -2
-    CubeIndex: 0
-  - Vert0: 0
-    Vert1: 0
-    Vert2: 0
-    Vert3: 0
-    Vert4: 0
-    Vert5: 0
-    Vert6: 0
-    Vert7: 0
-    Pos:
-      x: 13.5
-      y: -2.25
-      z: -2
-    CubeIndex: 0
-  - Vert0: 0
-    Vert1: 0
-    Vert2: 0
-    Vert3: 0
-    Vert4: 0
-    Vert5: 0
-    Vert6: 0
-    Vert7: 0
-    Pos:
-      x: 14
-      y: -2.25
-      z: -2
-    CubeIndex: 0
-  - Vert0: 0
-    Vert1: 0
-    Vert2: 0
-    Vert3: 0
-    Vert4: 0
-    Vert5: 0
-    Vert6: 0
-    Vert7: 0
-    Pos:
-      x: 14.5
-      y: -2.25
-      z: -2
-    CubeIndex: 0
   debug: 0
   ChaosMultiplier: 0.5
+  HandleSize: 0.2
+  HandlePosition:
+    x: 0
+    y: 0.75
+    z: 0
+  DuplicationExtraPosition:
+    x: 0
+    y: 0.5
+    z: 0
   MeshRenderer: {fileID: 644154722}
 --- !u!4 &644154720
 Transform:
@@ -3130,7 +3091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1663408938
 ParticleSystemRenderer:
   serializedVersion: 6

@@ -33,6 +33,9 @@ public class IsoSurfaceExtractor : MonoBehaviour
     public Cell[] Cells;
     public bool debug = false;
     public float ChaosMultiplier = 1;
+    public float HandleSize = 1;
+    public float3 HandlePosition;
+    public float3 DuplicationExtraPosition;
 
     static readonly int[] edgeTable = {
         0x0  , 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c,
@@ -617,16 +620,17 @@ public class IsoSurfaceExtractor : MonoBehaviour
     [Serializable]
     public struct Cell
     {
-        public int Vert0;
-        public int Vert1;
-        public int Vert2;
-        public int Vert3;
-        public int Vert4;
-        public int Vert5;
-        public int Vert6;
-        public int Vert7;
+        [NonSerialized] public int Vert0;
+        [NonSerialized] public int Vert1;
+        [NonSerialized] public int Vert2;
+        [NonSerialized] public int Vert3;
+        [NonSerialized] public int Vert4;
+        [NonSerialized] public int Vert5;
+        [NonSerialized] public int Vert6;
+        [NonSerialized] public int Vert7;
         public float3 Pos;
-        public int CubeIndex;
+        [NonSerialized] public int CubeIndex;
+        //remove all NonSerialized attributes if you need to debug these variables!
     }
 
     public MeshFilter MeshRenderer;
@@ -1005,3 +1009,49 @@ public class IsoSurfaceExtractor : MonoBehaviour
 //        EditorGUI.PropertyField(ContentPosition, property.FindPropertyRelative("CubeIndex"));
 //    }
 //}
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(IsoSurfaceExtractor))]
+public class IsoSurfaceExtractorEditor : Editor
+{
+    public void OnSceneGUI()
+    {
+        //Debug.Log("somethingworking?");
+        var LO = target as IsoSurfaceExtractor;
+        SerializedProperty SCells = serializedObject.FindProperty("Cells");
+
+        Handles.color = Color.blue;
+
+        for(int i = 0; i < SCells.arraySize; i++)
+        {
+            float3 CurrentPos = new float3(
+                SCells.GetArrayElementAtIndex(i).FindPropertyRelative("Pos").FindPropertyRelative("x").floatValue,
+                SCells.GetArrayElementAtIndex(i).FindPropertyRelative("Pos").FindPropertyRelative("y").floatValue,
+                SCells.GetArrayElementAtIndex(i).FindPropertyRelative("Pos").FindPropertyRelative("z").floatValue);
+            CurrentPos = Handles.PositionHandle(CurrentPos, quaternion.identity);
+
+            SCells.GetArrayElementAtIndex(i).FindPropertyRelative("Pos").FindPropertyRelative("x").floatValue = CurrentPos.x;
+            SCells.GetArrayElementAtIndex(i).FindPropertyRelative("Pos").FindPropertyRelative("y").floatValue = CurrentPos.y;
+            SCells.GetArrayElementAtIndex(i).FindPropertyRelative("Pos").FindPropertyRelative("z").floatValue = CurrentPos.z;
+
+            var test = Handles.Button(CurrentPos+LO.HandlePosition, quaternion.identity, LO.HandleSize, LO.HandleSize * 2, Handles.SphereHandleCap);
+            
+            if (test)
+            {
+                Debug.Log("buttonpressed");
+                
+                //SCells.arraySize++;
+                SCells.InsertArrayElementAtIndex(i);
+                //SCells.GetArrayElementAtIndex(i+1) = SCells.GetArrayElementAtIndex(i);
+                //SCells.GetArrayElementAtIndex(i + 1).FindPropertyRelative("Pos").vector3Value = SCells.GetArrayElementAtIndex(i).FindPropertyRelative("Pos").vector3Value;
+
+                SCells.GetArrayElementAtIndex(i + 1).FindPropertyRelative("Pos").FindPropertyRelative("x").floatValue += LO.DuplicationExtraPosition.x;
+                SCells.GetArrayElementAtIndex(i + 1).FindPropertyRelative("Pos").FindPropertyRelative("y").floatValue += LO.DuplicationExtraPosition.y;
+                SCells.GetArrayElementAtIndex(i + 1).FindPropertyRelative("Pos").FindPropertyRelative("z").floatValue += LO.DuplicationExtraPosition.z;
+            }
+        }
+        //LinkedObject.Size = Handles.ScaleHandle(LinkedObject.Size, LinkedObject.transform.position, LinkedObject.transform.rotation, HandleUtility.GetHandleSize(LinkedObject.transform.position) * 1.5f);
+        serializedObject.ApplyModifiedProperties();
+    }
+}
+#endif
