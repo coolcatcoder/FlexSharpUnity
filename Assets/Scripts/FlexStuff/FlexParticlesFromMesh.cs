@@ -56,4 +56,15 @@ public class FlexParticlesFromMesh : MonoBehaviour
             }
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        for (int i = 0; i < Verts.vertexCount; i++)
+        {
+            Gizmos.color = Colours[Random.Range(0, Colours.Length)];
+            //Gizmos.DrawWireSphere(transform.TransformPoint(Verts.vertices[i]), Container.RParticleRadius);
+        }
+    }
+#endif
 }

@@ -161,7 +161,7 @@ MonoBehaviour:
   CollisionChannel: 16777216
   Colours:
   - serializedVersion: 2
-    rgba: 511805
+    rgba: 4278701885
 --- !u!4 &31072777
 Transform:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   CollisionChannel: 16777216
   Colours:
   - serializedVersion: 2
-    rgba: 511805
+    rgba: 4278701885
 --- !u!4 &103518569
 Transform:
   m_ObjectHideFlags: 0
@@ -385,11 +385,11 @@ MonoBehaviour:
   CollisionChannel: 16777216
   Colours:
   - serializedVersion: 2
-    rgba: 14608392
+    rgba: 4292798472
   - serializedVersion: 2
-    rgba: 13870082
+    rgba: 4292060162
   - serializedVersion: 2
-    rgba: 11224832
+    rgba: 4289414912
 --- !u!4 &146025608
 Transform:
   m_ObjectHideFlags: 0
@@ -1011,7 +1011,7 @@ MonoBehaviour:
   CollisionChannel: 16777216
   Colours:
   - serializedVersion: 2
-    rgba: 511805
+    rgba: 4278701885
 --- !u!4 &465964875
 Transform:
   m_ObjectHideFlags: 0
@@ -1669,7 +1669,7 @@ MonoBehaviour:
   CollisionChannel: 16777216
   Colours:
   - serializedVersion: 2
-    rgba: 511805
+    rgba: 4278701885
 --- !u!4 &792526111
 Transform:
   m_ObjectHideFlags: 0
@@ -7443,6 +7443,7 @@ MonoBehaviour:
   Sensitivity: 1
   Speed: 20
   ScrollSensitivity: 1
+  FreezeZ: 0
 --- !u!54 &1569541153
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8367,7 +8368,7 @@ MonoBehaviour:
   ParticlesPerTime: 65
   SecondsBetween: 0.1
   SecondsTillStop: 10
-  emit: 0
+  emit: 1
   VelocityX: 0
   VelocityY: -20
   VelocityZ: 0
@@ -8380,6 +8381,7 @@ MonoBehaviour:
     rgba: 13576903
   debug: 0
   Burst: 0
+  ExtraData: 0
 --- !u!4 &1907235148
 Transform:
   m_ObjectHideFlags: 0
